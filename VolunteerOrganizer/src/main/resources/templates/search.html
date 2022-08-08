@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+
+<div class="container body-content">
+
+    <h1>Search for Volunteer Opportunity</h1>
+
+    <form th:action="@{/search/results}" method = "post">
+        <h2>Filter by:</h2>
+
+        <p>
+            <label for="searchTerm1">Keyword:</label>
+            <input type="text" name="searchTerm1" id="searchTerm1" />
+        </p>
+
+        <p>
+            <label for="searchTerm2">Category:</label>
+            <input type="text" name="searchTerm2" id="searchTerm2" />
+        </p>
+
+        <p>
+            <label for="start">Start date:</label>
+
+            <input type="date" id="start" name="volunteer-start">
+        </p>
+
+        <p>
+            <label for="start">End date:</label>
+
+            <input type="date" id="end" name="volunteer-end">
+        </p>
+
+        <input type="submit" value="Search" />
+    </form>
+
+    <hr />
+</div>
+
+</body>
+</html>
