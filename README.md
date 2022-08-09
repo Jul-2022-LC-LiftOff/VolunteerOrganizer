@@ -1,3 +1,3 @@
 # VolunteerOrganizer
 Liftoff Group Project
-Volunteer organization website craetion
+Koko's group
