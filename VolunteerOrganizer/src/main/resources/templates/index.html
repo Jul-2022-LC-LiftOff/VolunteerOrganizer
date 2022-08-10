@@ -2,9 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Index</title>
 </head>
 <body>
+  <header>
+    <h1>Volunteer Organizer</h1>
+  </header>
+
+  <form method="post">
+      <h2>New User?</h2>
+
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username"/>
+
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="password"/>
+
+      <select name="accountType" id="accountType" placeholder="Account Type" >
+          <option value="volunteer">Volunteer</option>
+          <option value="organization">Organization</option>
+      </select>
+  </form>
 
 </body>
 </html>
