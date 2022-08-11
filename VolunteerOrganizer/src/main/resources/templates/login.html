@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<p>Welcome Back!</p>
+
+<form action="formSubmit" id="form">
+    <label for="fname"></label><br>
+    <input type="text" id="fname" name="username" placeholder="Username" required><br>
+
+    <label for="lname"></label><br>
+    <input type="text" id="lname" name="password" placeholder="Password" required><br>
+
+    <select name="accountType" id="accountType">
+        <option value="" selected="selected">Account Type</option>
+    </select>
+</form>
+
+<button type="submit" form="form" value="Sign In">Sign In</button>
+</body>
+</html>
