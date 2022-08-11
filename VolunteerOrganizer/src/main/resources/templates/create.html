@@ -6,17 +6,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
 </head>
-<body style="background-color:#EDEAE9;" class="container">
+<body class="container">
     <header>
-        <h1 id = "mainHeading" style="background-color:#C3E1AD" >Volunteer Organizer</h1>
+        <h1 id = "mainHeading" >Volunteer Organizer</h1>
     </header>
-    <h3 style="color:brown">Create Opportunity</h3><br>
+    <h3 style="color:brown">Create Volunteer Opportunity:</h3><br>
         <form method="post">
             <div class="form-group">
-                <label>Organization Name<input type="text" name="organizationName" ></label><br><br>
+                <label th:for="orgname">Organization Name</label>
+                <select name="orgname" placeholder="Select Organization Name" >
+                    <option th:each="orgname : ${orgnames}"
+                            th:text="${orgname}"
+                            ></option>
+                </select><br><br>
             </div>
             <div class="form-group">
-                <label>Opportunity Name<input type="text" name="opportunityName" ></label><br><br>
+                <label>Opportunity Description<input type="text" name="description" ></label><br><br>
             </div>
 
             <div class="form-group">
@@ -49,8 +54,15 @@
                 <label>End Date<input type="date" name="endDate" ></label><br><br>
             </div>
             <div class="form-group">
-                <label>No of Hours<input type="number" name="hours" ></label><br><br>
-                <label>Age Group<input type="text" name="age"></label><br><br>
+                <label>Hours/day<input type="number" name="hours" ></label><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age Group</label>
+                <select name="age" id="age" placeholder="Select Age Group" >
+                    <option value="student">Student</option>
+                    <option value="adult">Adult</option>
+                </select><br><br>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create Opportunity" class="btn btn-success">
