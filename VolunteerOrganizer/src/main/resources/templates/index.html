@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+  <header>
+    <h1>Volunteer Organizer</h1>
+  </header>
+
+  <form method="post">
+      <h2>New User?</h2>
+
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username"/><br>
+
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="password"/><br>
+
+      <select name="accountType" id="accountType" placeholder="Account Type" >
+          <option selected disabled>Account Type</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="organization">Organization</option>
+      </select><br>
+
+      <input type="submit" value="Sign Up" />
+  </form>
+
+    <div>
+        <h2>Already Have An Account?</h2>
+        <button onclick="">
+            Login
+        </button>
+    </div>
+
+</body>
+</html>
