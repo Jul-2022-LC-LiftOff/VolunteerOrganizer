@@ -1,5 +1,6 @@
 #idea
 /.idea/
+/VolunteerOrganizer/.idea/
 
 #gradle
 /VolunteerOrganizer/.gradle/
