@@ -14,7 +14,7 @@
         <form method="post">
             <div class="form-group">
                 <label th:for="orgname">Organization Name</label>
-                <select name="orgname" placeholder="Select Organization Name" >
+                <select name="name" placeholder="Select Organization Name" >
                     <option th:each="orgname : ${orgnames}"
                             th:text="${orgname}"
                             ></option>
