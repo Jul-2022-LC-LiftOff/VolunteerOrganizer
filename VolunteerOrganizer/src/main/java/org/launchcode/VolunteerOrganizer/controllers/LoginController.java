@@ -1,3 +1,5 @@
+// TODO: Remove login controller, as login template will be handled by AuthorizationController
+
 package org.launchcode.VolunteerOrganizer.controllers;
 
 import org.springframework.stereotype.Controller;
