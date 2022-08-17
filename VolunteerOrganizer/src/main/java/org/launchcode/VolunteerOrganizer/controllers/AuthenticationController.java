@@ -39,10 +39,10 @@ public class AuthenticationController {
         return user.get();
     }
 
-    // TODO: Un-comment this section once User model includes inherited getId() method
-//    private static void setUserInSession(HttpSession session, User user) {
-//        session.setAttribute(userSessionKey, user.getId());
-//    }
+
+    private static void setUserInSession(HttpSession session, User user) {
+        session.setAttribute(userSessionKey, user.getId());
+    }
 
     @GetMapping("/login")
     public String displayLoginForm(Model model) {
@@ -77,8 +77,7 @@ public class AuthenticationController {
             return "login";
         }
 
-        // TODO: Un-comment this section once User model includes inherited getId() method
-//        setUserInSession(request.getSession(), theUser);
+        setUserInSession(request.getSession(), theUser);
 
         return "redirect:";
     }

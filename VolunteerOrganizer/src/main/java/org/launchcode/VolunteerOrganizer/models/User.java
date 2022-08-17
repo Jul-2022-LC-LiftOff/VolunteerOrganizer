@@ -2,11 +2,16 @@ package org.launchcode.VolunteerOrganizer.models;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-// TODO: Extend Abstract Entity
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     @NotNull
     private String username;
@@ -21,6 +26,10 @@ public class User {
         this.username = username;
         this.pwHash = encoder.encode(password);
         this.accountType = accountType;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
