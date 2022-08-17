@@ -48,6 +48,9 @@ public class AuthenticationController {
     public String displayLoginForm(Model model) {
         model.addAttribute(new LoginFormDTO());
         model.addAttribute("title", "Log In");
+        // Example user for login gittesting purposes
+        User exampleUser = new User("Test", "password", "organization");
+        userRepository.save(exampleUser);
         return "login";
     }
 
