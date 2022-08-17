@@ -1,16 +1,19 @@
 package org.launchcode.VolunteerOrganizer.models;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 public class User {
 
     private String username;
     private String pwHash;
     private String accountType;
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
 
     public User(String username, String password, String accountType) {
         this.username = username;
-        this.pwHash = password;
+        this.pwHash = encoder.encode(password);
         this.accountType = accountType;
     }
 
@@ -20,5 +23,9 @@ public class User {
 
     public String getAccountType() {
         return accountType;
+    }
+
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
     }
 }
