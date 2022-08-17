@@ -11,7 +11,7 @@ public class LoginController {
 
     @GetMapping("login")
     public String displayLoginForm() {
-        return "loginNew";
+        return "login";
     }
 
     @PostMapping("login")
