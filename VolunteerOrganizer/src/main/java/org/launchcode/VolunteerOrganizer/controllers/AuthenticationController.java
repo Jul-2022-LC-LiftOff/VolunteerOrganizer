@@ -31,8 +31,9 @@ public class AuthenticationController {
         return user.get();
     }
 
-    private static void setUserInSession(HttpSession session, User user) {
-        session.setAttribute(userSessionKey, user.getId());
-    }
+    // TODO: Un-comment this section once User model includes inherited getId() method
+//    private static void setUserInSession(HttpSession session, User user) {
+//        session.setAttribute(userSessionKey, user.getId());
+//    }
 }
 
