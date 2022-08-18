@@ -22,7 +22,8 @@ public class AuthenticationController {
     @Autowired
     UserRepository userRepository;
 
-    private static final String userSessionKey = "user";
+    private static final String userSessionKey = "userId";
+    private static final String userAccountType = "accountType";
 
     public User getUserFromSession(HttpSession session) {
         Integer userId = (Integer) session.getAttribute(userSessionKey);
@@ -42,6 +43,7 @@ public class AuthenticationController {
 
     private static void setUserInSession(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user.getId());
+        session.setAttribute(userAccountType, user.getAccountType());
     }
 
     @GetMapping("/login")
