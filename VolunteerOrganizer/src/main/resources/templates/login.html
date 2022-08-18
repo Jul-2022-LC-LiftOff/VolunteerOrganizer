@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
-<body>
+<body class="container">
 <p>Welcome Back!</p>
 
-<form action="formSubmit" id="form">
-    <label for="fname"></label><br>
-    <input type="text" id="fname" name="username" placeholder="Username" required><br>
+<form method="post">
+    <div class="form-group">
+        <label th:for="username">
+            <input class="form-control" th:field="${loginFormDTO.username}" placeholder="Username" required>
+        </label>
+        <p class="error" th:errors="${loginFormDTO.username}"></p>
+    </div>
+    <div class="form-group">
+        <label>
+            <input class="form-control" th:field="${loginFormDTO.password}" type="password" placeholder="Password" required>
+        </label>
+        <p class="error" th:errors="${loginFormDTO.password}"></p>
+    </div>
 
-    <label for="lname"></label><br>
-    <input type="text" id="lname" name="password" placeholder="Password" required><br>
-
-    <select name="accountType" id="accountType">
-        <option value="" selected="selected">Account Type</option>
-    </select>
+    <input type="submit" class="btn btn-primary" value="Log In" />
 </form>
 
-<button type="submit" form="form" value="Sign In">Sign In</button>
 </body>
 </html>
