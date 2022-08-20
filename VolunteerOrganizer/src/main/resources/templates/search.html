@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Search</title>
 </head>
 <body>
-
-<div th:replace="fragments :: page-header"></div>
 
 <div class="container body-content">
 
@@ -40,13 +40,13 @@
         <p>
             <label for="start">Start date:</label>
 
-            <input type="date" id="start" name="volunteer-start">
+            <input type="date" id="start" name="start">
         </p>
 
         <p>
             <label for="start">End date:</label>
 
-            <input type="date" id="end" name="volunteer-end">
+            <input type="date" id="end" name="end">
         </p>
 
         <input type="submit" value="Search" />
@@ -54,6 +54,14 @@
 
     <hr />
 </div>
+
+<table class="opportunity-listing">
+    <tr th:each="opportunity : ${opportunities}">
+        <td>
+            <p th:text="${'Name: ' + opportunity.name}"></p>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>
