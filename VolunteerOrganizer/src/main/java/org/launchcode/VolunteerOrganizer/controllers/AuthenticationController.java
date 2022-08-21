@@ -55,7 +55,7 @@ public class AuthenticationController {
 
     @PostMapping("/")
     public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
-                                   Errors errors, Model model) {
+                                   Errors errors, HttpServletRequest request, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Log In");
@@ -64,23 +64,28 @@ public class AuthenticationController {
 
         User theUser = userRepository.findByUsername(createAccountDTO.getUsername());
 
-        if (theUser == null && createAccountDTO.getPassword().equals(createAccountDTO.getVerifyPassword())) {
-            userRepository.save(new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
-                    createAccountDTO.getAccountType()));
-            errors.rejectValue("username", "user.invalid", "The given username does not exist");
+        if (theUser != null) {
+            errors.rejectValue("username", "user.invalid", "The given username already exists");
             model.addAttribute("title", "Log In");
             return "index";
         }
 
         String password = createAccountDTO.getPassword();
+        String verifyPassword = createAccountDTO.getVerifyPassword();
 
-        if (!theUser.isMatchingPassword(password)) {
-            errors.rejectValue("password", "password.invalid", "Invalid password");
+        if (!password.equals(verifyPassword)) {
+            errors.rejectValue("password", "password.invalid", "" +
+                    "Passwords do not match.");
             model.addAttribute("title", "Log In");
             return "index";
         }
 
-        return "redirect:";
+        User newUser = new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
+                createAccountDTO.getAccountType());
+
+        userRepository.save(newUser);
+        setUserInSession(request.getSession(), newUser);
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
@@ -118,7 +123,7 @@ public class AuthenticationController {
 
         setUserInSession(request.getSession(), theUser);
 
-        return "redirect:";
+        return "redirect:/home";
     }
 
     @GetMapping("/logout")
