@@ -2,6 +2,7 @@ package org.launchcode.VolunteerOrganizer.controllers;
 
 import org.launchcode.VolunteerOrganizer.models.User;
 import org.launchcode.VolunteerOrganizer.models.data.UserRepository;
+import org.launchcode.VolunteerOrganizer.models.dto.CreateAccountDTO;
 import org.launchcode.VolunteerOrganizer.models.dto.LoginFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,42 @@ public class AuthenticationController {
     private static void setUserInSession(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user.getId());
         session.setAttribute(userAccountType, user.getAccountType());
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute(new CreateAccountDTO());
+        return "index";
+    }
+
+    @PostMapping("/")
+    public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
+                                   Errors errors, Model model) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Log In");
+            return "index";
+        }
+
+        User theUser = userRepository.findByUsername(createAccountDTO.getUsername());
+
+        if (theUser == null && createAccountDTO.getPassword().equals(createAccountDTO.getVerifyPassword())) {
+            userRepository.save(new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
+                    createAccountDTO.getAccountType()));
+            errors.rejectValue("username", "user.invalid", "The given username does not exist");
+            model.addAttribute("title", "Log In");
+            return "index";
+        }
+
+        String password = createAccountDTO.getPassword();
+
+        if (!theUser.isMatchingPassword(password)) {
+            errors.rejectValue("password", "password.invalid", "Invalid password");
+            model.addAttribute("title", "Log In");
+            return "index";
+        }
+
+        return "redirect:";
     }
 
     @GetMapping("/login")
