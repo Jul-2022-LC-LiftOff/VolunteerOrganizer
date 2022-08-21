@@ -11,8 +11,8 @@ import org.launchcode.VolunteerOrganizer.models.Opportunity;
 import org.launchcode.VolunteerOrganizer.models.data.OpportunityRepository;
 import org.launchcode.VolunteerOrganizer.models.OpportunityData;
 
-
-
+import java.text.ParseException;
+import java.util.ArrayList;
 
 
 @Controller
@@ -31,14 +31,17 @@ public class SearchController {
     }
 
     @PostMapping("results")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end) {
+    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end) throws ParseException {
         Iterable<Opportunity> opportunities;
-        if (searchTerm.toLowerCase().equals("all") || searchTerm.equals("")) {
-            opportunities = opportunityRepository.findAll();
-        } else {
+
             opportunities = OpportunityData.findBySearchTerm(searchTerm, opportunityRepository.findAll());
-        }
+            opportunities = OpportunityData.findByCategory(category, opportunities);
+            opportunities = OpportunityData.findByDate(start, end, opportunities);
+
+
         model.addAttribute("opportunities", opportunities);
+
+
 
         return "search";
     }
