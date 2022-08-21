@@ -2,6 +2,7 @@ package org.launchcode.VolunteerOrganizer.controllers;
 
 import org.launchcode.VolunteerOrganizer.models.User;
 import org.launchcode.VolunteerOrganizer.models.data.UserRepository;
+import org.launchcode.VolunteerOrganizer.models.dto.CreateAccountDTO;
 import org.launchcode.VolunteerOrganizer.models.dto.LoginFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,47 @@ public class AuthenticationController {
         session.setAttribute(userAccountType, user.getAccountType());
     }
 
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute(new CreateAccountDTO());
+        return "index";
+    }
+
+    @PostMapping("/")
+    public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
+                                   Errors errors, HttpServletRequest request, Model model) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Log In");
+            return "index";
+        }
+
+        User theUser = userRepository.findByUsername(createAccountDTO.getUsername());
+
+        if (theUser != null) {
+            errors.rejectValue("username", "user.invalid", "The given username already exists");
+            model.addAttribute("title", "Log In");
+            return "index";
+        }
+
+        String password = createAccountDTO.getPassword();
+        String verifyPassword = createAccountDTO.getVerifyPassword();
+
+        if (!password.equals(verifyPassword)) {
+            errors.rejectValue("password", "password.invalid", "" +
+                    "Passwords do not match.");
+            model.addAttribute("title", "Log In");
+            return "index";
+        }
+
+        User newUser = new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
+                createAccountDTO.getAccountType());
+
+        userRepository.save(newUser);
+        setUserInSession(request.getSession(), newUser);
+        return "redirect:/home";
+    }
+
     @GetMapping("/login")
     public String displayLoginForm(Model model) {
         model.addAttribute(new LoginFormDTO());
@@ -81,7 +123,7 @@ public class AuthenticationController {
 
         setUserInSession(request.getSession(), theUser);
 
-        return "redirect:";
+        return "redirect:/home";
     }
 
     @GetMapping("/logout")
