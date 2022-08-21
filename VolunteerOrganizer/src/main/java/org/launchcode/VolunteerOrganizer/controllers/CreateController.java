@@ -28,6 +28,7 @@ public class CreateController {
         orgnames.add("YMCA");
         orgnames.add("Police Department");
         model.addAttribute("orgnames",orgnames);
+        model.addAttribute("title", "Create Volunteer Opportunity");
         return "create";
     }
 

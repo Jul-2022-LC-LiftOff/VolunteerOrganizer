@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create link</title>
+</head>
+<body>
+<div th:fragment="page-header">
+        <div>
+            <h1>Volunteer Organizer</h1>
+        </div>
+        <div>
+            <a th:href="@{/home}">Home</a>
+            <a th:href="@{/create}">Create Volunteer Opportunity</a>
+            <a th:href="@{/search}">Search Opportunity</a>
+        </div>
+    <h3 style="color:brown" th:text ="${title}"></h3><br>
+    </div>
+</div>
+</body>
+</html>
