@@ -11,7 +11,7 @@ public class OpportunityData {
     /**
      * Search all Opportunity fields for the given term.
      *
-     * @param searchTerm            The search term to look for.
+     * @param searchTerm       The search term to look for.
      * @param allOpportunities The list of opportunities to search.
      * @return List of all Opportunities with at least one field containing the value.
      */
@@ -36,35 +36,68 @@ public class OpportunityData {
         return results;
     }
 
-    public static ArrayList<Opportunity> findByCategory(String category, Iterable<Opportunity>allOpportunities1) {
+    public static ArrayList<Opportunity> findByCategory(String category, Iterable<Opportunity> allOpportunities) {
         if (category.equals("selectcategory")) {
-            return (ArrayList<Opportunity>) allOpportunities1;
+            return (ArrayList<Opportunity>) allOpportunities;
         }
-        ArrayList<Opportunity> results1 = new ArrayList<>();
+        ArrayList<Opportunity> results = new ArrayList<>();
 
-        for (Opportunity opportunity : allOpportunities1) {
+        for (Opportunity opportunity : allOpportunities) {
             if (opportunity.getCategory().contains(category)) {
-                results1.add(opportunity);
+                results.add(opportunity);
             }
         }
-       return results1;
+        return results;
     }
 
-    public static ArrayList<Opportunity> findByDate(String start, String end, Iterable <Opportunity> allOpportunities2) throws ParseException {
+    public static ArrayList<Opportunity> findByDate(String start, String end, Iterable<Opportunity> allOpportunities) throws ParseException {
+
         SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
-        Date d1 = sdformat.parse(start);
-        Date d2 = sdformat.parse(end);
 
+        ArrayList<Opportunity> results = new ArrayList<>();
 
-        ArrayList<Opportunity> results2 = new ArrayList<>();
+        if (start.equals("") && end.equals("")) {
+            return (ArrayList<Opportunity>) allOpportunities;
+        }
 
-        for (Opportunity opportunity : allOpportunities2) {
-            Date d3 = sdformat.parse(opportunity.getStartDate());
-            Date d4 = sdformat.parse(opportunity.getEndDate());
-            if (d3.compareTo(d1) <= 0 ||  d4.compareTo(d2) >= 0) {
-                results2.add(opportunity);
+        if (!start.equals("") && !end.equals("")) {
+            Date searchStart = sdformat.parse(start);
+            Date searchEnd = sdformat.parse(end);
+
+            for (Opportunity opportunity : allOpportunities) {
+
+                Date oppStart = sdformat.parse(opportunity.getStartDate());
+                Date oppEnd = sdformat.parse(opportunity.getEndDate());
+
+                if (oppStart.compareTo(searchStart) >= 0 && oppEnd.compareTo(searchEnd) <= 0) {
+                    results.add(opportunity);
+                }
             }
         }
-        return results2;
+
+        if (!start.equals("") && (end.equals(""))) {
+            Date searchStart = sdformat.parse(start);
+
+            for (Opportunity opportunity : allOpportunities) {
+                Date oppStart = sdformat.parse(opportunity.getStartDate());
+
+                if (oppStart.compareTo(searchStart) >= 0) {
+                    results.add(opportunity);
+                }
+            }
+        }
+
+        if (!end.equals("") && (start.equals(""))) {
+            Date searchEnd = sdformat.parse(end);
+
+            for (Opportunity opportunity : allOpportunities) {
+                Date oppEnd = sdformat.parse(opportunity.getEndDate());
+
+                if (oppEnd.compareTo(searchEnd) <= 0) {
+                    results.add(opportunity);
+                }
+            }
+        }
+        return results;
     }
 }
