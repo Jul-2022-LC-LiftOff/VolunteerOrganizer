@@ -20,8 +20,6 @@ import java.util.ArrayList;
 public class SearchController {
 
 
-    @Autowired
-    private OpportunityRepository opportunityRepository;
 
 
     @RequestMapping("")
@@ -30,21 +28,9 @@ public class SearchController {
         return "search";
     }
 
-    @PostMapping("results")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end) throws ParseException {
-        Iterable<Opportunity> opportunities;
-
-            opportunities = OpportunityData.findBySearchTerm(searchTerm, opportunityRepository.findAll());
-            opportunities = OpportunityData.findByCategory(category, opportunities);
-            opportunities = OpportunityData.findByDate(start, end, opportunities);
-
-
-        model.addAttribute("opportunities", opportunities);
 
 
 
-        return "search";
-    }
 }
 
 

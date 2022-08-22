@@ -7,12 +7,63 @@
 <body>
 <div th:replace="fragments :: page-header"></div>
 
-<ul>
-   <li>Search for Volunteer Opportunity</li>
-   <li><a href="/create">Create Volunteer Opportunity</a></li>
-   <li><a href="/logout">Logout</a></li>
-</ul>
+<div class="container body-content">
 
+    <h1>Search for Volunteer Opportunity</h1>
+
+    <form th:action="@{/home/results}" method = "post">
+        <h2>Filter by:</h2>
+
+        <p>
+            <label for="searchTerm">Keyword:</label>
+            <input type="text" name="searchTerm" id="searchTerm" />
+        </p>
+
+        <p>
+            <label for="category">Category:</label>
+
+            <select name="category" id="category" >
+                <option value="selectcategory">Select Category</option>
+                <option value="childcare">Childcare</option>
+                <option value="medical">Medical and Healthcare</option>
+                <option value="animal">Animal Care</option>
+                <option value="environment">Environment</option>
+                <option value="construction">Construction</option>
+                <option value="arts">Arts and Music</option>
+                <option value="refugee">Refugee Support</option>
+                <option value="women">Women's Empowerment</option>
+                <option value="community">Community Development</option>
+                <option value="elderly">Eldercare</option>
+                <option value="special">Special Needs Care</option>
+            </select>
+
+        </p>
+
+        <p>
+            <label for="start">Start date:</label>
+
+            <input type="date" id="start" name="start">
+        </p>
+
+        <p>
+            <label for="start">End date:</label>
+
+            <input type="date" id="end" name="end">
+        </p>
+
+        <input type="submit" value="Search" />
+    </form>
+
+    <hr />
+</div>
+
+<table class="opportunity-listing">
+    <tr th:each="opportunity : ${opportunities}">
+        <td>
+            <p th:text="${'Name: ' + opportunity.name}"></p>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>
