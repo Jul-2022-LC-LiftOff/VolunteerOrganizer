@@ -20,7 +20,7 @@ public class HomeController {
     @Autowired
     private OpportunityRepository opportunityRepository;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String displayHome(Model model) {
         model.addAttribute("title", "Home");
         return "home";
@@ -34,6 +34,8 @@ public class HomeController {
         opportunities = OpportunityData.findByCategory(category, opportunities);
         opportunities = OpportunityData.findByDate(start, end, opportunities);
 
+        model.addAttribute("title", "Home");
+        model.addAttribute("resultsTitle", "Search results:");
         model.addAttribute("opportunities", opportunities);
 
         return "home";

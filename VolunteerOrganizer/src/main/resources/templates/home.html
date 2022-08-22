@@ -9,10 +9,10 @@
 
 <div class="container body-content">
 
-    <h1>Search for Volunteer Opportunity</h1>
+    <h3>Search for Volunteer Opportunity</h3>
 
     <form th:action="@{/home/results}" method = "post">
-        <h2>Filter by:</h2>
+        <h4>Filter by:</h4>
 
         <p>
             <label for="searchTerm">Keyword:</label>
@@ -57,6 +57,7 @@
     <hr />
 </div>
 
+<h4 th:text ="${resultsTitle}"></h4>
 <table class="opportunity-listing">
     <tr th:each="opportunity : ${opportunities}">
         <td>
@@ -64,6 +65,7 @@
         </td>
     </tr>
 </table>
+
 
 </body>
 </html>
