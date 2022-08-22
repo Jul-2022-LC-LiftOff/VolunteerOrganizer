@@ -40,7 +40,7 @@ public class CreateController {
           return "redirect:";
       }
         opportunityRepository.save(opportunity);
-        return "redirect:";
+        return "redirect:/home";
     }
 
 
