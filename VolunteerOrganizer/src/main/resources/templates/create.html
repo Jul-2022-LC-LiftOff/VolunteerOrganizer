@@ -10,22 +10,20 @@
 <div th:replace="fragments :: page-header"></div>
 
         <form method="post">
-            <div class="form-group">
-                <label th:for="orgname">Organization Name</label>
-                <select name="name" placeholder="Select Organization Name" >
-                    <option th:each="orgname : ${orgnames}"
-                            th:text="${orgname}"
-                            ></option>
-                </select><br><br>
+           <div class="form-group">
+                <label>Organization Name<input th:field= "${opportunity.name}" ></label><br><br>
+                <p class="error"  th:errors="${opportunity.name}"></p>
             </div>
+
             <div class="form-group">
-                <label>Opportunity Description<input type="text" name="description" ></label><br><br>
+                <label>Opportunity Description<input  th:field= "${opportunity.description}" ></label><br><br>
+                <p class="error"  th:errors="${opportunity.description}"></p>
             </div>
 
             <div class="form-group">
                 <label for="category">Category:</label>
-
-                <select name="category" id="category" placeholder="Select Category" >
+                <select th:field= "${opportunity.category}" id="category" >
+                    <option value="" >Select Category</option>
                     <option value="childcare">Childcare</option>
                     <option value="medical">Medical and Healthcare</option>
                     <option value="animal">Animal Care</option>
@@ -38,29 +36,36 @@
                     <option value="elderly">Eldercare</option>
                     <option value="special">Special Needs Care</option>
                 </select><br><br>
+                <p class="error"  th:errors="${opportunity.category}"></p>
             </div>
 
+            <div class="form-group">
+                <label>City<input type="text" th:field= "${opportunity.city}" ></label><br><br>
+                <p class="error"  th:errors="${opportunity.city}"></p>
+            </div>
 
             <div class="form-group">
-                <label>City<input type="text" name="city" ></label><br><br>
+                <label>Start Date<input type="date" th:field= "${opportunity.startDate}" ></label><br><br>
+                <p class="error"  th:errors="${opportunity.startDate}"></p>
             </div>
             <div class="form-group">
-                <label>Zip Code<input type="text" name="zipcode" ></label><br><br>
+                <label>End Date<input type="date" th:field= "${opportunity.endDate}"></label><br><br>
+                <p class="error"  th:errors="${opportunity.endDate}"></p>
             </div>
+
             <div class="form-group">
-                <label>Start Date<input type="date" name="startDate" ></label><br><br>
-                <label>End Date<input type="date" name="endDate" ></label><br><br>
-            </div>
-            <div class="form-group">
-                <label>Hours/day<input type="number" name="hours" ></label><br><br>
+                <label>Hours/day<input type="number" th:field= "${opportunity.hours}"></label><br><br>
+                <p class="error"  th:errors="${opportunity.hours}"></p>
             </div>
 
             <div class="form-group">
                 <label for="age">Age Group</label>
-                <select name="age" id="age" placeholder="Select Age Group" >
+                <select th:field= "${opportunity.age}" id="age" >
+                    <option value=""  >Select Age Group</option>
                     <option value="student">Student</option>
                     <option value="adult">Adult</option>
                 </select><br><br>
+                <p class="error"  th:errors="${opportunity.age}"></p>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create Opportunity" class="btn btn-success">

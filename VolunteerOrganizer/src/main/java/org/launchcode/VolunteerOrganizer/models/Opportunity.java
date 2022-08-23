@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,12 +13,8 @@ import java.util.Date;
 @Entity
 public class Opportunity extends AbstractEntity{
 
-//    @NotBlank(message = "Name is required")
-//    @Size(min = 2, max = 50, message = "Name must be between 3 and 50 characters")
-//    private String orgName;
-
     @NotBlank(message = "Description is required")
-    @Size(min = 10, max = 1000, message = "Description too long or too short!")
+    @Size(min = 5, max = 1000, message = "Description too long or too short!")
     private String description;
 
     @NotBlank(message = "Category is required")
@@ -26,51 +23,31 @@ public class Opportunity extends AbstractEntity{
     @NotBlank(message = "City is required")
     private String city;
 
-    @NotNull(message = "Zipcode is required")
-    private int zipcode;
-
-    @NotNull(message = "Start Date is required")
+    @NotBlank(message = "Start Date is required")
     private String startDate;
 
-    @NotNull(message = "End Date is required")
+    @NotBlank(message = "End Date is required")
     private String endDate;
 
-    @NotNull(message = "Hours is required")
+    @Min(value=1,message = "Enter valid number of hours")
     private int hours;
 
     @NotBlank(message = "Age Group is required")
     private String age;
 
-//   @ManyToOne
-//   private User user;
-
     public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age) {
-        //this.name = name;
         this.description = description;
         this.category = category;
         this.city = city;
-        this.zipcode = zipcode;
+
         this.startDate = startDate;
         this.endDate = endDate;
         this.hours = hours;
         this.age = age;
-        //this.user = user;
     }
 
     public Opportunity() {
     }
-
-//    public int getId() {
-//        return id;
-//    }
-
-//    public String getName() {
-//        return orgName;
-//    }
-//
-//    public void setName(String name) {
-//        this.orgName = name;
-//    }
 
     public String getDescription() {
         return description;
@@ -94,14 +71,6 @@ public class Opportunity extends AbstractEntity{
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public int getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(int zipcode) {
-        this.zipcode = zipcode;
     }
 
     public String getStartDate() {
@@ -136,11 +105,4 @@ public class Opportunity extends AbstractEntity{
         this.age = age;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 }
