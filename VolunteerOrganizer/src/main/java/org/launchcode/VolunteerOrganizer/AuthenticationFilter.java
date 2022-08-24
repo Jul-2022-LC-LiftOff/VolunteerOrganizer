@@ -22,6 +22,7 @@ public class AuthenticationFilter implements HandlerInterceptor {
     AuthenticationController authenticationController;
 
     private static final List<String> whitelist = Arrays.asList("/", "/login", "/logout");
+    private static final List<String> organizationUserRequired = Arrays.asList("/create");
 
     private static boolean isWhitelisted(String path) {
         for (String pathRoot : whitelist) {
@@ -31,6 +32,17 @@ public class AuthenticationFilter implements HandlerInterceptor {
         }
         return false;
     }
+
+    private static boolean isOrganizationUserRequired(String path) {
+        for (String pathRoot : organizationUserRequired) {
+            if (path.endsWith(pathRoot)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -44,10 +56,21 @@ public class AuthenticationFilter implements HandlerInterceptor {
         User user = authenticationController.getUserFromSession(session);
 
         if (user != null) {
-            return true;
+            if (isOrganizationUserRequired(request.getRequestURI())){
+                if (user.getAccountType().equals("organization")) {
+                    return true;
+                } else {
+                    response.sendRedirect("/home");
+                    return false;
+                }
+            } else {
+                return true;
+            }
         }
-
         response.sendRedirect("/");
         return false;
+
+
     }
+
 }
