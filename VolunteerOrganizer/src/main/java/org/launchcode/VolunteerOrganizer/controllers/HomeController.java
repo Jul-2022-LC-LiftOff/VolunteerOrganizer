@@ -41,4 +41,11 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/redirect")
+    public String displayHomeRedirect(Model model) {
+        model.addAttribute("title", "Home");
+        model.addAttribute("redirectMessage", "Access Denied: Redirected to Home");
+        return "home";
+    }
+
 }
