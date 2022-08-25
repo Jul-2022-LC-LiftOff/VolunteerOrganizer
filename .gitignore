@@ -2,6 +2,12 @@
 /.idea/
 /VolunteerOrganizer/.idea/
 
+#VSCode
+/.vscode/
+/VolunteerOrganizer/.vscode/
+#bin folder may automatically be created when project is opened in VSCode - src directory is to be used instead
+/VolunteerOrganizer/bin
+
 #gradle
 /VolunteerOrganizer/.gradle/
 /VolunteerOrganizer/build/
