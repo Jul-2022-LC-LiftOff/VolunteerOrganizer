@@ -106,17 +106,10 @@ public class AuthenticationController {
         }
 
         User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
-
-        if (theUser == null) {
-            errors.rejectValue("username", "user.invalid", "The given username does not exist");
-            model.addAttribute("title", "Log In");
-            return "login";
-        }
-
         String password = loginFormDTO.getPassword();
 
-        if (!theUser.isMatchingPassword(password)) {
-            errors.rejectValue("password", "password.invalid", "Invalid password");
+        if (theUser == null || !theUser.isMatchingPassword(password)) {
+            model.addAttribute("invalidLoginMessage", "Invalid Username and Password Combination");
             model.addAttribute("title", "Log In");
             return "login";
         }
@@ -142,4 +135,3 @@ public class AuthenticationController {
         return "redirect:/";
     }
 }
-
