@@ -21,14 +21,14 @@
 
       <div class="form-group">
           <label th:for="password">
-              <input class="form-control" th:field="${createAccountDTO.password}" placeholder="Password" required>
+              <input class="form-control" th:field="${createAccountDTO.password}" type="password" placeholder="Password" required>
           </label>
           <p class="error" th:errors="${createAccountDTO.password}"></p>
       </div>
 
       <div class="form-group">
           <label th:for="verifyPassword">
-              <input class="form-control" th:field="${createAccountDTO.verifyPassword}" placeholder="Verify Password" required>
+              <input class="form-control" th:field="${createAccountDTO.verifyPassword}" type="password" placeholder="Verify Password" required>
           </label>
           <p class="error" th:errors="${createAccountDTO.verifyPassword}"></p>
       </div>

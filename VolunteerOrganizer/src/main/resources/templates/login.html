@@ -20,7 +20,7 @@
         </label>
         <p class="error" th:errors="${loginFormDTO.password}"></p>
     </div>
-
+    <p class="error" style="color:red" th:text="${invalidLoginMessage}"></p>
     <input type="submit" class="btn btn-primary" value="Log In" />
 </form>
 
