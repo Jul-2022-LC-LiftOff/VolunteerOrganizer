@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<div th:replace="fragments :: page-header"></div>
+    <h2 class = "centered">All Opportunities</h2>
+    <li th:each="opportunity : ${opportunities}">
+        <a th:href="@{'/list-opportunity/' + ${opportunity.id}}"  th:text="${opportunity.name}"></a>
+
+    </li>
+
+</body>
+</html>
