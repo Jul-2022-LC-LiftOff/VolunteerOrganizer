@@ -22,6 +22,7 @@
         <p>
             <label for="searchTerm">Keyword:</label>
             <input type="text" name="searchTerm" id="searchTerm" />
+            <br>(organization name, activity description or city)
         </p>
 
 
@@ -68,11 +69,14 @@
 <table class="opportunity-listing">
     <tr th:each="opportunity : ${opportunities}">
         <td>
-            <p th:text="${'Start Date: ' + opportunity.startDate}"></p>
             <p th:text="${'Name: ' + opportunity.name}"></p>
+            <p th:text="${'Start Date: ' + opportunity.startDate}"></p>
+            <p th:text="${'End Date: ' + opportunity.endDate}"></p>
             <p th:text="${'Description: ' + opportunity.description}"></p>
             <p th:text="${'Category: ' + opportunity.category}"></p>
             <p th:text="${'Hours: ' + opportunity.hours}"></p>
+            <p th:text="${'Age: ' + opportunity.age}"></p>
+            <br>
         </td>
     </tr>
 </table>

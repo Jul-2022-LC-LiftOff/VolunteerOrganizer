@@ -2,18 +2,17 @@ package org.launchcode.VolunteerOrganizer.models;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class OpportunityData {
 
     /**
-     * Search all Opportunity fields for the given term.
+     * Search the city, name and description Opportunity fields for the given term.
      *
      * @param searchTerm       The search term to look for.
      * @param allOpportunities The list of opportunities to search.
-     * @return List of all Opportunities with at least one field containing the value.
+     * @return List of all Opportunities with at least one of the city, name or description fields containing the search term.
      */
     public static ArrayList<Opportunity> findBySearchTerm(String searchTerm, Iterable<Opportunity> allOpportunities) {
         String lower_searchTerm = searchTerm.toLowerCase();
