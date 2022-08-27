@@ -65,7 +65,7 @@
     <hr />
 </div>
 
-<h4 th:text ="${resultsTitle}"></h4>
+<h4 th:text ="${'Number of opportunities: ' + opportunities.size()}"></h4>
 <table class="opportunity-listing">
     <tr th:each="opportunity : ${opportunities}">
         <td>
