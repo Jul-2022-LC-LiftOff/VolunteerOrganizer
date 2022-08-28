@@ -15,12 +15,17 @@
     <h3>Search for Volunteer Opportunity</h3>
 
     <form th:action="@{/home/results}" method = "post">
-        <h4>Filter by:</h4>
+        <h4>Filter by any number of fields:</h4>
+        <p><em>To see all opportunities, leave all fields blank.</em></p>
+
 
         <p>
             <label for="searchTerm">Keyword:</label>
             <input type="text" name="searchTerm" id="searchTerm" />
+            <br>(organization name, activity description or city)
         </p>
+
+
 
         <p>
             <label for="category">Category:</label>
@@ -60,11 +65,18 @@
     <hr />
 </div>
 
-<h4 th:text ="${resultsTitle}"></h4>
+<h4 th:text ="${'Number of opportunities: ' + opportunities.size()}"></h4>
 <table class="opportunity-listing">
     <tr th:each="opportunity : ${opportunities}">
         <td>
             <p th:text="${'Name: ' + opportunity.name}"></p>
+            <p th:text="${'Start Date: ' + opportunity.startDate}"></p>
+            <p th:text="${'End Date: ' + opportunity.endDate}"></p>
+            <p th:text="${'Description: ' + opportunity.description}"></p>
+            <p th:text="${'Category: ' + opportunity.category}"></p>
+            <p th:text="${'Hours: ' + opportunity.hours}"></p>
+            <p th:text="${'Age: ' + opportunity.age}"></p>
+            <br>
         </td>
     </tr>
 </table>
