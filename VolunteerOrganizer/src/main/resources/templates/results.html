@@ -11,57 +11,9 @@
 
 <div class="container body-content">
 
-    <h3>Search for Volunteer Opportunity</h3>
-
-    <form th:action="@{/home/results}" method = "post">
-        <h4>Filter by any number of fields:</h4>
-        <p><em>To see all opportunities, leave all fields blank.</em></p>
+    <div th:replace="fragments :: search-form"></div>
 
 
-        <p>
-            <label for="searchTerm">Keyword:</label>
-            <input type="text" name="searchTerm" id="searchTerm" />
-            <br>(organization name, activity description or city)
-        </p>
-
-
-
-        <p>
-            <label for="category">Category:</label>
-
-            <select name="category" id="category" >
-                <option value="selectcategory">Select Category</option>
-                <option value="childcare">Childcare</option>
-                <option value="medical">Medical and Healthcare</option>
-                <option value="animal">Animal Care</option>
-                <option value="environment">Environment</option>
-                <option value="construction">Construction</option>
-                <option value="arts">Arts and Music</option>
-                <option value="refugee">Refugee Support</option>
-                <option value="women">Women's Empowerment</option>
-                <option value="community">Community Development</option>
-                <option value="elderly">Eldercare</option>
-                <option value="special">Special Needs Care</option>
-            </select>
-
-        </p>
-
-        <p>
-            <label for="start">Start date:</label>
-
-            <input type="date" id="start" name="start">
-        </p>
-
-        <p>
-            <label for="start">End date:</label>
-
-            <input type="date" id="end" name="end">
-        </p>
-
-        <input type="submit" value="Search" />
-    </form>
-
-    <hr />
 </div>
 
 <h4 th:text ="${'Number of opportunities: ' + opportunities.size()}"></h4>
