@@ -44,7 +44,7 @@ public class HomeController {
         model.addAttribute("resultsTitle", "Search results:");
         model.addAttribute("opportunities", opportunities);
 
-        return "results";
+        return "search-results";
     }
 
     @GetMapping("/redirect")
