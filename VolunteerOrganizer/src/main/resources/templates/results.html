@@ -6,7 +6,6 @@
 </head>
 <body>
 
-<h4 style="color:brown" th:text ="${redirectMessage}"></h4>
 
 <div th:replace="fragments :: page-header"></div>
 
@@ -64,6 +63,23 @@
 
     <hr />
 </div>
+
+<h4 th:text ="${'Number of opportunities: ' + opportunities.size()}"></h4>
+<table class="opportunity-listing">
+    <tr th:each="opportunity : ${opportunities}">
+        <td>
+            <p th:text="${'Name: ' + opportunity.name}"></p>
+            <p th:text="${'Start Date: ' + opportunity.startDate}"></p>
+            <p th:text="${'End Date: ' + opportunity.endDate}"></p>
+            <p th:text="${'Description: ' + opportunity.description}"></p>
+            <p th:text="${'Category: ' + opportunity.category}"></p>
+            <p th:text="${'Hours: ' + opportunity.hours}"></p>
+            <p th:text="${'Age: ' + opportunity.age}"></p>
+            <br>
+        </td>
+    </tr>
+</table>
+
 
 </body>
 </html>
