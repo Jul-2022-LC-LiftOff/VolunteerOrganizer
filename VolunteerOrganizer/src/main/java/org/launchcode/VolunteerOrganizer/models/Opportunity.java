@@ -3,12 +3,16 @@ package org.launchcode.VolunteerOrganizer.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Opportunity extends AbstractEntity{
@@ -34,6 +38,9 @@ public class Opportunity extends AbstractEntity{
 
     @NotBlank(message = "Age Group is required")
     private String age;
+
+    @ManyToMany
+    private final List<User> volunteers = new ArrayList<>();
 
     public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age) {
         this.description = description;
@@ -103,6 +110,14 @@ public class Opportunity extends AbstractEntity{
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public List<User> getVolunteers() {
+        return volunteers;
+    }
+
+    public void addVolunteer(User volunteer) {
+        this.volunteers.add(volunteer);
     }
 
 }
