@@ -62,37 +62,29 @@ public class HomeController {
         User user = authenticationController.getUserFromSession(session);
 
         Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
-        Opportunity opportunity = result.get();
 
+        if(result.isEmpty()) {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Volunteer Opportunity Does Not Exist.");
+            return "home";
+        }
+
+        Opportunity opportunity = result.get();
         OpportunityUserDTO opportunityVolunteer = new OpportunityUserDTO();
         opportunityVolunteer.setOpportunity(opportunity);
 
         if (!opportunity.getVolunteers().contains(user)) {
             opportunity.addVolunteer(user);
             opportunityRepository.save(opportunity);
-            return "redirect:/home/redirect/sign-up-successful";
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
+            return "home";
         } else {
-            return "redirect:/home/redirect/sign-up-unsuccessful";
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
+            return "home";
         }
-
     }
-
-    @GetMapping("/redirect/sign-up-successful")
-    public String displayHomeRedirectSignUpSuccessful(Model model) {
-
-        model.addAttribute("title", "Home");
-        model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
-        return "home";
-    }
-
-    @GetMapping("/redirect/sign-up-unsuccessful")
-    public String displayHomeRedirectSignUpUnuccessful(Model model) {
-
-        model.addAttribute("title", "Home");
-        model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
-        return "home";
-    }
-
 
     @GetMapping("/redirect/access-denied")
     public String displayHomeRedirectAccessDenied(HttpServletRequest request, Model model) {
