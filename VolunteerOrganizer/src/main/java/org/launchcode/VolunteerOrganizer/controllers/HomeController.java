@@ -66,10 +66,15 @@ public class HomeController {
 
         OpportunityUserDTO opportunityVolunteer = new OpportunityUserDTO();
         opportunityVolunteer.setOpportunity(opportunity);
-        opportunity.addVolunteer(user);
-        opportunityRepository.save(opportunity);
 
-        return "redirect:/home/redirect/sign-up-successful";
+        if (!opportunity.getVolunteers().contains(user)) {
+            opportunity.addVolunteer(user);
+            opportunityRepository.save(opportunity);
+            return "redirect:/home/redirect/sign-up-successful";
+        } else {
+            return "redirect:/home/redirect/sign-up-unsuccessful";
+        }
+
     }
 
     @GetMapping("/redirect/sign-up-successful")
