@@ -8,27 +8,16 @@
 <body>
 <div th:fragment="page-header">
     <link rel ="stylesheet" th:href ="@{/styles.css}">
-<<<<<<< HEAD
-        <div>
-            <h1>Volunteer Organizer</h1>
-        </div>
-        <div>
-            <a th:href="@{/home}">Home</a>
-            <a th:href="@{/create}">Create Volunteer Opportunity</a>
-            <a th:href="@{/logout}">Logout</a></li>
-            <a th:href="@{/delete}">Delete Account</a></li>
-        </div>
-=======
     <div>
         <h1>Volunteer Organizer</h1>
     </div>
     <div>
         <a th:href="@{/home}">Home</a>
         <a th:href="@{/create}">Create Volunteer Opportunity</a>
-        <a th:href="@{/list}">List</a>
-        <a th:href="@{/logout}">Logout</a>
+        <a th:href="@{/list}">List</a></li>
+        <a th:href="@{/logout}">Logout</a></li>
+        <a th:href="@{/delete}">Delete Account</a></li>
     </div>
->>>>>>> f7ba99f (Added html page and controller methods for Lis All opprtunity feature)
     <h2 style="color:brown" th:text ="${title}"></h2><br>
 </div>
 
