@@ -60,7 +60,7 @@ public class AuthenticationFilter implements HandlerInterceptor {
                 if (user.getAccountType().equals("organization")) {
                     return true;
                 } else {
-                    response.sendRedirect("/home/redirect");
+                    response.sendRedirect("/home/redirect/access-denied");
                     return false;
                 }
             } else {
