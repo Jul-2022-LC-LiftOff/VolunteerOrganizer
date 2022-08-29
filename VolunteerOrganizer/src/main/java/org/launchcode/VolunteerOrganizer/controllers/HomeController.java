@@ -80,6 +80,14 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/redirect/sign-up-unsuccessful")
+    public String displayHomeRedirectSignUpUnuccessful(Model model) {
+
+        model.addAttribute("title", "Home");
+        model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
+        return "home";
+    }
+
 
     @GetMapping("/redirect/access-denied")
     public String displayHomeRedirectAccessDenied(HttpServletRequest request, Model model) {
