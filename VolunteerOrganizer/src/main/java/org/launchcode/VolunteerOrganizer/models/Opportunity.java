@@ -49,15 +49,15 @@ public class Opportunity extends AbstractEntity{
     @ManyToMany
     private final List<User> volunteers = new ArrayList<>();
 
-    public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age) {
+    public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age, int numVolunteersNeeded) {
         this.description = description;
         this.category = category;
         this.city = city;
-
         this.startDate = startDate;
         this.endDate = endDate;
         this.hours = hours;
         this.age = age;
+        this.numVolunteersNeeded = numVolunteersNeeded;
     }
 
     public Opportunity() {
