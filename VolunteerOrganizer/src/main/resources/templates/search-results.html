@@ -28,6 +28,7 @@
             <p th:text="${'Category: ' + opportunity.category}"></p>
             <p th:text="${'Hours: ' + opportunity.hours}"></p>
             <p th:text="${'Age: ' + opportunity.age}"></p>
+            <p th:text="${'Number of Volunteers Needed: ' + opportunity.numVolunteersNeeded}"></p>
             <a th:href="'/home/volunteer/sign-up?opportunityId=' + ${opportunity.id}">
                 <button>Sign Up to Volunteer</button>
             </a>
