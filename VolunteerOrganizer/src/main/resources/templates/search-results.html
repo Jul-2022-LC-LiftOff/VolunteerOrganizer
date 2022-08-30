@@ -30,7 +30,7 @@
             <p th:text="${'Age: ' + opportunity.age}"></p>
             <p th:text="${'Total Number of Volunteers Needed: ' + opportunity.numVolunteersNeeded}"></p>
             <p th:text="${'Volunteer Slots Remaining: ' + opportunity.getNumVolunteerSlotsRemaining()}"></p>
-            <th:block th:if="${opportunity.getNumVolunteerSlotsRemaining() > 0}">
+            <th:block th:if="${opportunity.getNumVolunteerSlotsRemaining() > 0 and user.getAccountType() == 'volunteer'}">
                 <a th:href="'/home/volunteer/sign-up?opportunityId=' + ${opportunity.id}">
                     <button>Sign Up to Volunteer</button>
                 </a>

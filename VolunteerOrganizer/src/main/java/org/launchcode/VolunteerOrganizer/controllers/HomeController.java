@@ -42,7 +42,10 @@ public class HomeController {
     }
 
     @PostMapping("/results")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end, @RequestParam(required = false) String withVolunteerSlotsAvailable) throws ParseException {
+    public String displaySearchResults(HttpServletRequest request, Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end, @RequestParam(required = false) String withVolunteerSlotsAvailable) throws ParseException {
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+        
         Iterable<Opportunity> opportunities;
 
         opportunities = OpportunityData.findBySearchTerm(searchTerm, opportunityRepository.findAll());
@@ -56,6 +59,7 @@ public class HomeController {
         model.addAttribute("title", "Home");
         model.addAttribute("resultsTitle", "Search results:");
         model.addAttribute("opportunities", opportunities);
+        model.addAttribute("user", user);
 
         return "search-results";
     }
