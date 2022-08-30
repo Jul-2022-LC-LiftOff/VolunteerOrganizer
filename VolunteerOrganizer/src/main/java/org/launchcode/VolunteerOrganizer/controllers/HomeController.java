@@ -74,11 +74,17 @@ public class HomeController {
         opportunityVolunteer.setOpportunity(opportunity);
 
         if (!opportunity.getVolunteers().contains(user)) {
-            opportunity.addVolunteer(user);
-            opportunityRepository.save(opportunity);
-            model.addAttribute("title", "Home");
-            model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
-            return "home";
+            if (opportunity.getNumVolunteerSlotsRemaining() > 0) {
+                opportunity.addVolunteer(user);
+                opportunityRepository.save(opportunity);
+                model.addAttribute("title", "Home");
+                model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
+                return "home";
+            } else {
+                model.addAttribute("title", "Home");
+                model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! No remaining volunteer slots.");
+                return "home";
+            }
         } else {
             model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
