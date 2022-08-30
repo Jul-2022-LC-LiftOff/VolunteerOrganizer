@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -41,7 +42,6 @@ public class Opportunity extends AbstractEntity{
     @NotBlank(message = "Age Group is required")
     private String age;
 
-    @NotBlank(message = "Number of Volunteers Needed is Required")
     @Positive(message = "Number must be greater than 0")
     @Digits(integer = 6, fraction = 0, message = "Must be a whole number")
     private int numVolunteersNeeded;
