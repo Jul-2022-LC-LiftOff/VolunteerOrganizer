@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefined;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -40,13 +42,16 @@ public class HomeController {
     }
 
     @PostMapping("/results")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end, @RequestParam(required=false) String withVolunteerSlotsAvailable) throws ParseException {
+    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end, @RequestParam(required = false) String withVolunteerSlotsAvailable) throws ParseException {
         Iterable<Opportunity> opportunities;
 
         opportunities = OpportunityData.findBySearchTerm(searchTerm, opportunityRepository.findAll());
         opportunities = OpportunityData.findByCategory(category, opportunities);
         opportunities = OpportunityData.findByDate(start, end, opportunities);
-        opportunities = OpportunityData.findByVolunteerSlotsAvailable(withVolunteerSlotsAvailable, opportunities);
+
+        if (withVolunteerSlotsAvailable != null) {
+            opportunities = OpportunityData.findByVolunteerSlotsAvailable(withVolunteerSlotsAvailable, opportunities);
+        }
 
         model.addAttribute("title", "Home");
         model.addAttribute("resultsTitle", "Search results:");
