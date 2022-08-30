@@ -30,14 +30,15 @@
             <p th:text="${'Age: ' + opportunity.age}"></p>
             <p th:text="${'Total Number of Volunteers Needed: ' + opportunity.numVolunteersNeeded}"></p>
             <p th:text="${'Volunteer Slots Remaining: ' + opportunity.getNumVolunteerSlotsRemaining()}"></p>
-            <a th:href="'/home/volunteer/sign-up?opportunityId=' + ${opportunity.id}">
-                <button>Sign Up to Volunteer</button>
-            </a>
+            <th:block th:if="${opportunity.getNumVolunteerSlotsRemaining() > 0}">
+                <a th:href="'/home/volunteer/sign-up?opportunityId=' + ${opportunity.id}">
+                    <button>Sign Up to Volunteer</button>
+                </a>
+            </th:block>
             <br>
         </td>
     </tr>
 </table>
-
 
 </body>
 </html>
