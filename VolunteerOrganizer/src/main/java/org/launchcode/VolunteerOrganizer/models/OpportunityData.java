@@ -99,4 +99,18 @@ public class OpportunityData {
         }
         return results;
     }
+
+    public static ArrayList<Opportunity> findByVolunteerSlotsAvailable(String withVolunteerSlotsAvailable, Iterable<Opportunity> allOpportunities) {
+        if (withVolunteerSlotsAvailable.equals("yes")) {
+            ArrayList<Opportunity> results = new ArrayList<>();
+            for (Opportunity opportunity : allOpportunities) {
+                if (opportunity.getNumVolunteerSlotsRemaining() > 0) {
+                    results.add(opportunity);
+                }
+            }
+            return results;
+        } else {
+            return (ArrayList<Opportunity>) allOpportunities;
+        }
+    }
 }
