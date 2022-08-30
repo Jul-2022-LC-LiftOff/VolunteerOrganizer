@@ -23,6 +23,7 @@ public class AuthenticationFilter implements HandlerInterceptor {
 
     private static final List<String> whitelist = Arrays.asList("/", "/login", "/logout");
     private static final List<String> organizationUserRequired = Arrays.asList("/create");
+    private static final List<String> volunteerUserRequired = Arrays.asList("/home/volunteer");
 
     private static boolean isWhitelisted(String path) {
         for (String pathRoot : whitelist) {
@@ -42,7 +43,14 @@ public class AuthenticationFilter implements HandlerInterceptor {
         return false;
     }
 
-
+    private static boolean isVolunteerUserRequired(String path) {
+        for (String pathRoot : volunteerUserRequired) {
+            if (path.startsWith(pathRoot)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -60,7 +68,14 @@ public class AuthenticationFilter implements HandlerInterceptor {
                 if (user.getAccountType().equals("organization")) {
                     return true;
                 } else {
-                    response.sendRedirect("/home/redirect");
+                    response.sendRedirect("/home/redirect/access-denied");
+                    return false;
+                }
+            } else if (isVolunteerUserRequired(request.getRequestURI())){
+                if (user.getAccountType().equals("volunteer")) {
+                    return true;
+                } else {
+                    response.sendRedirect("/home/redirect/access-denied");
                     return false;
                 }
             } else {
@@ -69,8 +84,5 @@ public class AuthenticationFilter implements HandlerInterceptor {
         }
         response.sendRedirect("/");
         return false;
-
-
     }
-
 }

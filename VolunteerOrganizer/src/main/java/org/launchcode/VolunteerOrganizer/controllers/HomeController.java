@@ -4,6 +4,8 @@ import org.launchcode.VolunteerOrganizer.models.Opportunity;
 import org.launchcode.VolunteerOrganizer.models.OpportunityData;
 import org.launchcode.VolunteerOrganizer.models.User;
 import org.launchcode.VolunteerOrganizer.models.data.OpportunityRepository;
+import org.launchcode.VolunteerOrganizer.models.data.UserRepository;
+import org.launchcode.VolunteerOrganizer.models.dto.OpportunityUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.util.Optional;
 
 @RequestMapping("home")
 @Controller
@@ -24,7 +27,11 @@ public class HomeController {
     private OpportunityRepository opportunityRepository;
 
     @Autowired
+    private OpportunityRepository userRepository;
+
+    @Autowired
     AuthenticationController authenticationController;
+
 
     @GetMapping("")
     public String displayHome(Model model) {
@@ -47,14 +54,46 @@ public class HomeController {
         return "search-results";
     }
 
-    @GetMapping("/redirect")
-    public String displayHomeRedirect(HttpServletRequest request, Model model) {
+
+
+    @GetMapping("/volunteer/sign-up")
+    public String volunteerSignup(HttpServletRequest request, @RequestParam Integer opportunityId, Model model){
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+
+        Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
+
+        if(result.isEmpty()) {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Volunteer Opportunity Does Not Exist.");
+            return "home";
+        }
+
+        Opportunity opportunity = result.get();
+        OpportunityUserDTO opportunityVolunteer = new OpportunityUserDTO();
+        opportunityVolunteer.setOpportunity(opportunity);
+
+        if (!opportunity.getVolunteers().contains(user)) {
+            opportunity.addVolunteer(user);
+            opportunityRepository.save(opportunity);
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
+            return "home";
+        } else {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
+            return "home";
+        }
+    }
+
+    @GetMapping("/redirect/access-denied")
+    public String displayHomeRedirectAccessDenied(HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
 
         model.addAttribute("title", "Home");
-        model.addAttribute("redirectMessage", "Access Denied as " + user.getAccountType().substring(0, 1).toUpperCase() + user.getAccountType().substring(1) + ": Redirected to Home");
+        model.addAttribute("redirectMessageFailure", "Access Denied as " + user.getAccountType().substring(0, 1).toUpperCase() + user.getAccountType().substring(1) + ": Redirected to Home");
         return "home";
     }
 
