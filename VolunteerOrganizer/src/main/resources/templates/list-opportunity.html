@@ -7,8 +7,9 @@
 <body>
 <div th:replace="fragments :: page-header"></div>
 <table >
+    <h1 th:text =${heading}></h1>
     <tr th:each="opportunity : ${opportunities}">
-        <h1 th:text ="${'Opportunities for Organization : ' + opportunity.name}"></h1>
+
         <td>
             <p th:text ="${'Organization Name: ' + opportunity.name}"></p>
             <p th:text ="${'Opportunity Description: ' + opportunity.description}" ></p>
