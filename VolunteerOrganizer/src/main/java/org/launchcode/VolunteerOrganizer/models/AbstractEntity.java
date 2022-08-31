@@ -1,5 +1,6 @@
 package org.launchcode.VolunteerOrganizer.models;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -17,6 +18,7 @@ public abstract class AbstractEntity {
 
     @NotBlank(message = "Name is required")
     @Size(max=100)
+    @Column(name = "name")
     private String name;
 
 
