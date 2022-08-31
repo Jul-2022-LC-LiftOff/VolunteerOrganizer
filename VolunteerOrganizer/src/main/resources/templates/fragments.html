@@ -8,15 +8,16 @@
 <body>
 <div th:fragment="page-header">
     <link rel ="stylesheet" th:href ="@{/styles.css}">
-        <div>
-            <h1>Volunteer Organizer</h1>
-        </div>
-        <div>
-            <a th:href="@{/home}">Home</a>
-            <a th:href="@{/create}">Create Volunteer Opportunity</a>
-            <a th:href="@{/logout}">Logout</a></li>
-            <a th:href="@{/delete}">Delete Account</a></li>
-        </div>
+    <div>
+        <h1>Volunteer Organizer</h1>
+    </div>
+    <div>
+        <a th:href="@{/home}">Home</a>
+        <a th:href="@{/create}">Create Volunteer Opportunity</a>
+        <a th:href="@{/list}">List</a></li>
+        <a th:href="@{/logout}">Logout</a></li>
+        <a th:href="@{/delete}">Delete Account</a></li>
+    </div>
     <h2 style="color:brown" th:text ="${title}"></h2><br>
 </div>
 
@@ -77,6 +78,30 @@
 
     <hr />
 
+</div>
+<div th:fragment="opportunity-list">
+    <table class="opportunity-listing">
+        <tr th:each="opportunity : ${opportunities}">
+            <td>
+                <hr />
+                <p th:text="${'Name: ' + opportunity.name}"></p>
+                <p th:text="${'Start Date: ' + opportunity.startDate}"></p>
+                <p th:text="${'End Date: ' + opportunity.endDate}"></p>
+                <p th:text="${'Description: ' + opportunity.description}"></p>
+                <p th:text="${'Category: ' + opportunity.category}"></p>
+                <p th:text="${'Hours: ' + opportunity.hours}"></p>
+                <p th:text="${'Age: ' + opportunity.age}"></p>
+                <p th:text="${'Total Number of Volunteers Needed: ' + opportunity.numVolunteersNeeded}"></p>
+                <p th:text="${'Volunteer Slots Remaining: ' + opportunity.getNumVolunteerSlotsRemaining()}"></p>
+                <th:block th:if="${opportunity.getNumVolunteerSlotsRemaining() > 0 and user.getAccountType() == 'volunteer'}">
+                    <a th:href="'/home/volunteer/sign-up?opportunityId=' + ${opportunity.id}">
+                        <button>Sign Up to Volunteer</button>
+                    </a>
+                </th:block>
+                <br>
+            </td>
+        </tr>
+    </table>
 </div>
 
 </body>
