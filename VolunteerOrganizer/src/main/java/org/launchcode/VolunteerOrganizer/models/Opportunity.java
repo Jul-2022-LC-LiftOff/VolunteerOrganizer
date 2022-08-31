@@ -5,9 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -39,18 +42,23 @@ public class Opportunity extends AbstractEntity{
     @NotBlank(message = "Age Group is required")
     private String age;
 
+    @Positive(message = "Number must be greater than 0")
+    @Digits(integer = 6, fraction = 0, message = "Must be a whole number")
+    private int numVolunteersNeeded;
+
     @ManyToMany
     private final List<User> volunteers = new ArrayList<>();
 
-    public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age) {
+
+    public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age, int numVolunteersNeeded) {
         this.description = description;
         this.category = category;
         this.city = city;
-
         this.startDate = startDate;
         this.endDate = endDate;
         this.hours = hours;
         this.age = age;
+        this.numVolunteersNeeded = numVolunteersNeeded;
     }
 
     public Opportunity() {
@@ -114,6 +122,18 @@ public class Opportunity extends AbstractEntity{
 
     public List<User> getVolunteers() {
         return volunteers;
+    }
+
+    public int getNumVolunteersNeeded() {
+        return numVolunteersNeeded;
+    }
+
+    public void setNumVolunteersNeeded(int volunteersNeeded) {
+        this.numVolunteersNeeded = volunteersNeeded;
+    }
+
+    public int getNumVolunteerSlotsRemaining() {
+        return numVolunteersNeeded - volunteers.size();
     }
 
     public void addVolunteer(User volunteer) {

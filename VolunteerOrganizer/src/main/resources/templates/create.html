@@ -67,6 +67,12 @@
                 </select><br><br>
                 <p class="error"  th:errors="${opportunity.age}"></p>
             </div>
+
+            <div class="form-group">
+                <label>Number of Volunteers Needed<input type="number" value="1" min="1" th:field= "${opportunity.numVolunteersNeeded}"></label><br><br>
+                <p class="error"  th:errors="${opportunity.numVolunteersNeeded}"></p>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create Opportunity" class="btn btn-success">
             </div>

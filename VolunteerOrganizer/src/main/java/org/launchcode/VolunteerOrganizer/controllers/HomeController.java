@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefined;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -40,16 +42,24 @@ public class HomeController {
     }
 
     @PostMapping("/results")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end) throws ParseException {
+    public String displaySearchResults(HttpServletRequest request, Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end, @RequestParam(required = false) String withVolunteerSlotsAvailable) throws ParseException {
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+        
         Iterable<Opportunity> opportunities;
 
         opportunities = OpportunityData.findBySearchTerm(searchTerm, opportunityRepository.findAll());
         opportunities = OpportunityData.findByCategory(category, opportunities);
         opportunities = OpportunityData.findByDate(start, end, opportunities);
 
+        if (withVolunteerSlotsAvailable != null) {
+            opportunities = OpportunityData.findByVolunteerSlotsAvailable(withVolunteerSlotsAvailable, opportunities);
+        }
+
         model.addAttribute("title", "Home");
         model.addAttribute("resultsTitle", "Search results:");
         model.addAttribute("opportunities", opportunities);
+        model.addAttribute("user", user);
 
         return "search-results";
     }
@@ -74,11 +84,17 @@ public class HomeController {
         opportunityVolunteer.setOpportunity(opportunity);
 
         if (!opportunity.getVolunteers().contains(user)) {
-            opportunity.addVolunteer(user);
-            opportunityRepository.save(opportunity);
-            model.addAttribute("title", "Home");
-            model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
-            return "home";
+            if (opportunity.getNumVolunteerSlotsRemaining() > 0) {
+                opportunity.addVolunteer(user);
+                opportunityRepository.save(opportunity);
+                model.addAttribute("title", "Home");
+                model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
+                return "home";
+            } else {
+                model.addAttribute("title", "Home");
+                model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! No remaining volunteer slots.");
+                return "home";
+            }
         } else {
             model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
