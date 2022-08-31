@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:replace="fragments :: page-header"></div>
-    <h2 class = "centered">All Opportunities</h2>
+    <h2 class = "centered">All Organizations</h2>
     <li th:each="opportunity : ${opportunities}">
         <a th:href="@{'/list-opportunity/' + ${opportunity.name}}"  th:text="${opportunity.name}"></a>
 
