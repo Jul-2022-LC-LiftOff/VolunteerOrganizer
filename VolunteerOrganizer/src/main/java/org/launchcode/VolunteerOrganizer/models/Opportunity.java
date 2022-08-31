@@ -6,7 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Digits;
-import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -18,10 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-
 @Entity
-@NamedQuery(name = "Opportunity.findByName", query = "select s from Opportunity s where s.name = ?1")
 public class Opportunity extends AbstractEntity{
 
     @NotBlank(message = "Description is required")
