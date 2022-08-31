@@ -6,22 +6,7 @@
 </head>
 <body>
 <div th:replace="fragments :: page-header"></div>
-<table >
-    <h1 th:text =${heading}></h1>
-    <tr th:each="opportunity : ${opportunities}">
-
-        <td>
-            <p th:text ="${'Organization Name: ' + opportunity.name}"></p>
-            <p th:text ="${'Opportunity Description: ' + opportunity.description}" ></p>
-            <p th:text ="${'City: ' + opportunity.city}" > </p>
-            <p th:text ="${'Start Date: ' + opportunity.startDate}" ></p>
-            <p th:text ="${'End Date: ' + opportunity.endDate}" ></p>
-            <p th:text ="${'Hours/Day: ' + opportunity.hours}" ></p>
-            <p th:text ="${'Age Group: ' + opportunity.age}" ></p>
-        </td>
-    </tr>
-</table>
-
-
+<h1 th:text =${heading}></h1>
+<div th:replace="fragments :: opportunity-list"></div>
 </body>
 </html>

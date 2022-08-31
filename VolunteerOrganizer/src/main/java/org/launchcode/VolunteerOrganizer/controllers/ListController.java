@@ -1,6 +1,7 @@
 package org.launchcode.VolunteerOrganizer.controllers;
 
 import org.launchcode.VolunteerOrganizer.models.Opportunity;
+import org.launchcode.VolunteerOrganizer.models.User;
 import org.launchcode.VolunteerOrganizer.models.data.OpportunityRepository;
 import org.launchcode.VolunteerOrganizer.models.dto.OpportunityUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +23,8 @@ import java.util.Optional;
 public class ListController {
     @Autowired
     private OpportunityRepository opportunityRepository;
+    @Autowired
+    AuthenticationController authenticationController;
 
     @GetMapping("list")
     public String list(Model model) {
@@ -38,9 +43,11 @@ public class ListController {
     }
 
     @GetMapping("list-opportunity/{orgName}")
-    public String listOpportunies( Model model, @PathVariable String orgName) {
-
+    public String listOpportunies(HttpServletRequest request, Model model, @PathVariable String orgName) {
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
         List<Opportunity> opportunity= opportunityRepository.findByName(orgName);
+        model.addAttribute("user", user );
 
         model.addAttribute("heading", "Opportunities for: "+ orgName );
             model.addAttribute("opportunities", opportunity);
