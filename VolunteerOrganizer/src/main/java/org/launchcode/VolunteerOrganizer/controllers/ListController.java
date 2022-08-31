@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,17 @@ public class ListController {
 
     @GetMapping("list")
     public String list(Model model) {
-       // Iterable<Opportunity> allOpportunity = opportunityRepository.findAll();
-        model.addAttribute("opportunities", opportunityRepository.findAll());
+        List<String> orgNames = new ArrayList<>();
+        List<Opportunity> opportunitiesList = new ArrayList<>();
+        Iterable<Opportunity> allOpportunity = opportunityRepository.findAll();
+        for(Opportunity opportunity:allOpportunity) {
+            if(!orgNames.contains(opportunity.getName())){
+                orgNames.add(opportunity.getName());
+                opportunitiesList.add(opportunity);
+            }
+        }
+
+       model.addAttribute("opportunities",opportunitiesList );
         return "list";
     }
 
