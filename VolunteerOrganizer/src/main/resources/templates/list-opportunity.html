@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments :: page-header"></div>
+<table >
+    <h1 th:text =${heading}></h1>
+    <tr th:each="opportunity : ${opportunities}">
+
+        <td>
+            <p th:text ="${'Organization Name: ' + opportunity.name}"></p>
+            <p th:text ="${'Opportunity Description: ' + opportunity.description}" ></p>
+            <p th:text ="${'City: ' + opportunity.city}" > </p>
+            <p th:text ="${'Start Date: ' + opportunity.startDate}" ></p>
+            <p th:text ="${'End Date: ' + opportunity.endDate}" ></p>
+            <p th:text ="${'Hours/Day: ' + opportunity.hours}" ></p>
+            <p th:text ="${'Age Group: ' + opportunity.age}" ></p>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

@@ -8,15 +8,16 @@
 <body>
 <div th:fragment="page-header">
     <link rel ="stylesheet" th:href ="@{/styles.css}">
-        <div>
-            <h1>Volunteer Organizer</h1>
-        </div>
-        <div>
-            <a th:href="@{/home}">Home</a>
-            <a th:href="@{/create}">Create Volunteer Opportunity</a>
-            <a th:href="@{/logout}">Logout</a></li>
-            <a th:href="@{/delete}">Delete Account</a></li>
-        </div>
+    <div>
+        <h1>Volunteer Organizer</h1>
+    </div>
+    <div>
+        <a th:href="@{/home}">Home</a>
+        <a th:href="@{/create}">Create Volunteer Opportunity</a>
+        <a th:href="@{/list}">List</a></li>
+        <a th:href="@{/logout}">Logout</a></li>
+        <a th:href="@{/delete}">Delete Account</a></li>
+    </div>
     <h2 style="color:brown" th:text ="${title}"></h2><br>
 </div>
 
