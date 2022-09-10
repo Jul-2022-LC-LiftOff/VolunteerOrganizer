@@ -1,6 +1,7 @@
 package org.launchcode.VolunteerOrganizer.controllers;
 
 import org.launchcode.VolunteerOrganizer.models.Opportunity;
+import org.launchcode.VolunteerOrganizer.models.User;
 import org.launchcode.VolunteerOrganizer.models.data.OpportunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.net.ssl.HandshakeCompletedEvent;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,11 @@ public class CreateController {
           model.addAttribute("title", "Create Volunteer Opportunity:");
           return "create";
       }
+        HandshakeCompletedEvent request = null;
+        HttpSession session = (HttpSession) request.getSession();
+        AuthenticationController authenticationController = null;
+        User user = authenticationController.getUserFromSession(session);
+        opportunity.setCreatorUserId(user.getId());
         opportunityRepository.save(opportunity);
         return "redirect:/home";
     }

@@ -1,15 +1,15 @@
 package org.launchcode.VolunteerOrganizer.models;
 
+import org.launchcode.VolunteerOrganizer.models.data.OpportunityRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -34,6 +34,16 @@ public class User {
         this.username = username;
         this.pwHash = encoder.encode(password);
         this.accountType = accountType;
+    }
+
+    public List<Opportunity> getOpportunitiesForUser(OpportunityRepository opportunityRepository) {
+        List<Opportunity> orgOpportunities = new ArrayList<>();
+        for(Opportunity opportunity: opportunityRepository.findAll()) {
+            if (opportunity.getCreatorUserId() == this.id) {
+                orgOpportunities.add(opportunity);
+            }
+        }
+        return orgOpportunities;
     }
 
     public int getId() {
