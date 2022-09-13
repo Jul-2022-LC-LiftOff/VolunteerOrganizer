@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${createAccountDTO.accountType == 'organization'}"
+    >Organization Sign Up</title>
+
+    <title th:unless="${createAccountDTO.accountType == 'organization'}"
+    >Volunteer Sign Up</title>
+</head>
+<body>
+<header>
+    <h1>Volunteer Organizer</h1>
+
+</header>
+
+<form method="post">
+    <h2>New User?</h2>
+
+    <div class="form-group">
+        <label th:for="username">
+            <input class="form-control" th:field="${createAccountDTO.username}" placeholder="Username" required>
+        </label>
+        <p class="error" th:errors="${createAccountDTO.username}"></p>
+    </div>
+
+    <div class="form-group">
+        <label th:for="password">
+            <input class="form-control" th:field="${createAccountDTO.password}" type="password" placeholder="Password" required>
+        </label>
+        <p class="error" th:errors="${createAccountDTO.password}"></p>
+    </div>
+
+    <div class="form-group">
+        <label th:for="verifyPassword">
+            <input class="form-control" th:field="${createAccountDTO.verifyPassword}" type="password" placeholder="Verify Password" required>
+        </label>
+        <p class="error" th:errors="${createAccountDTO.verifyPassword}"></p>
+    </div>
+
+    <div class="form-group">
+        <label th:for="accountType">
+            <select class="form-control" th:field="*{createAccountDTO.accountType}" placeholder="Account Type" >
+                <option th:value="accountType" selected disabled>Account Type</option>
+                <option  th:value="volunteer">Volunteer</option>
+                <option  th:value="organization">Organization</option>
+            </select><br>
+        </label>
+        <p class="error" th:errors="${createAccountDTO.accountType}"></p>
+    </div>
+
+
+
+    <input type="submit" value="Sign Up" />
+</form>
+
+<div>
+    <h2>Already Have An Account?</h2>
+    <button onclick="location.href='/login'">
+        Login
+    </button>
+</div>
+
+</body>
+</html>
