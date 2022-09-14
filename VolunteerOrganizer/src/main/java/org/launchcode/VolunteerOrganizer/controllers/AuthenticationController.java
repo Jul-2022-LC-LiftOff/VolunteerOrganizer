@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,11 +50,25 @@ public class AuthenticationController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute(new CreateAccountDTO());
+
         return "index";
     }
 
-    @PostMapping("/")
+    @GetMapping("/signup/{accountType}")
+    public String index(Model model, @PathVariable String accountType) {
+        CreateAccountDTO createAccountDTO = new CreateAccountDTO();
+        createAccountDTO.setAccountType(accountType);
+        if(accountType == "volunteer") {
+            model.addAttribute("title", "Volunteer");
+            createAccountDTO.setOrganizationName(null);
+        } else {
+            model.addAttribute("title", "Organization");
+        }
+        model.addAttribute("createAccountDTO", createAccountDTO);
+        return "signup";
+    }
+
+    @PostMapping("/signup/{accountType}")
     public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
                                    Errors errors, HttpServletRequest request, Model model) {
 
@@ -81,7 +96,7 @@ public class AuthenticationController {
         }
 
         User newUser = new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
-                createAccountDTO.getAccountType());
+                createAccountDTO.getAccountType(), createAccountDTO.getOrganizationName());
 
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);

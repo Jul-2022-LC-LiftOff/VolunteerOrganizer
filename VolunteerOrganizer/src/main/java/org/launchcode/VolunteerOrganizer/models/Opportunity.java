@@ -24,6 +24,7 @@ import java.util.List;
 @NamedQuery(name = "Opportunity.findByName", query = "select s from Opportunity s where s.name = ?1")
 public class Opportunity extends AbstractEntity{
 
+    private int creatorUserId;
     @NotBlank(message = "Description is required")
     @Size(min = 5, max = 1000, message = "Description too long or too short!")
     private String description;
@@ -54,7 +55,7 @@ public class Opportunity extends AbstractEntity{
     private final List<User> volunteers = new ArrayList<>();
 
 
-    public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age, int numVolunteersNeeded) {
+    public Opportunity(String description, String category, String city, int zipcode, String startDate, String endDate, int hours, String age, int numVolunteersNeeded, int creatorUserID) {
         this.description = description;
         this.category = category;
         this.city = city;
@@ -63,6 +64,7 @@ public class Opportunity extends AbstractEntity{
         this.hours = hours;
         this.age = age;
         this.numVolunteersNeeded = numVolunteersNeeded;
+        this.creatorUserId = creatorUserId;
     }
 
     public Opportunity() {
@@ -144,4 +146,11 @@ public class Opportunity extends AbstractEntity{
         this.volunteers.add(volunteer);
     }
 
+    public int getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(int creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
 }

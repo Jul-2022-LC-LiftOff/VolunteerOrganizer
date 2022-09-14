@@ -19,6 +19,8 @@ public class CreateAccountDTO {
 
     private String accountType;
 
+    private String organizationName;
+
     public String getVerifyPassword() {
         return verifyPassword;
     }
@@ -49,5 +51,13 @@ public class CreateAccountDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 }
