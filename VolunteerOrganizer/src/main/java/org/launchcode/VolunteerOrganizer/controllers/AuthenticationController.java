@@ -68,7 +68,7 @@ public class AuthenticationController {
         return "signup";
     }
 
-    @PostMapping("/")
+    @PostMapping("/signup/{accountType}")
     public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
                                    Errors errors, HttpServletRequest request, Model model) {
 
@@ -96,7 +96,7 @@ public class AuthenticationController {
         }
 
         User newUser = new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
-                createAccountDTO.getAccountType());
+                createAccountDTO.getAccountType(), createAccountDTO.getOrganizationName());
 
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);

@@ -23,6 +23,7 @@ public class User {
     @NotNull
     private String pwHash;
     private String accountType;
+    private String organizationName;
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @ManyToMany(mappedBy = "volunteers")
@@ -30,10 +31,16 @@ public class User {
 
     public User() {}
 
-    public User(String username, String password, String accountType) {
+    public User(String username, String pwHash, String accountType, String organizationName) {
+        if (accountType.equals("organization")) {
+            this.organizationName = organizationName;
+        } else {
+            this.organizationName = null;
+        }
         this.username = username;
-        this.pwHash = encoder.encode(password);
+        this.pwHash = encoder.encode(pwHash);
         this.accountType = accountType;
+
     }
 
     public List<Opportunity> getOpportunitiesForUser(OpportunityRepository opportunityRepository) {
@@ -60,6 +67,14 @@ public class User {
 
     public List<Opportunity> getOpportunities() {
         return opportunities;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
     public boolean isMatchingPassword(String password) {

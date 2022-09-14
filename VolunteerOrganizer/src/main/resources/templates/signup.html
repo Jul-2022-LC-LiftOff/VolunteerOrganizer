@@ -2,11 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title th:if="${createAccountDTO.accountType == 'organization'}"
-    >Organization Sign Up</title>
-
-    <title th:unless="${createAccountDTO.accountType == 'organization'}"
-    >Volunteer Sign Up</title>
+    <title th:text="${title}"></title>
 </head>
 <body>
 <header>
@@ -38,18 +34,12 @@
         <p class="error" th:errors="${createAccountDTO.verifyPassword}"></p>
     </div>
 
-    <div class="form-group">
-        <label th:for="accountType">
-            <select class="form-control" th:field="*{createAccountDTO.accountType}" placeholder="Account Type" >
-                <option th:value="accountType" selected disabled>Account Type</option>
-                <option  th:value="volunteer">Volunteer</option>
-                <option  th:value="organization">Organization</option>
-            </select><br>
+    <div class="form-group" th:if="${createAccountDTO.accountType == 'organization'}">
+        <label th:for="organizationName">
+            <input class="form-control" th:field="${createAccountDTO.organizationName}"  placeholder="Organization Name" required>
         </label>
-        <p class="error" th:errors="${createAccountDTO.accountType}"></p>
+        <p class="error" th:errors="${createAccountDTO.organizationName}"></p>
     </div>
-
-
 
     <input type="submit" value="Sign Up" />
 </form>
