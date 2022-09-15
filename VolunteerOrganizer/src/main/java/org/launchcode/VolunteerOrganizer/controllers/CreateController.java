@@ -43,14 +43,9 @@ public class CreateController {
           model.addAttribute("title", "Create Volunteer Opportunity:");
           return "create";
       }
-//        HandshakeCompletedEvent request = null;
-//        HttpSession session = (HttpSession) request.getSession();
-//        AuthenticationController authenticationController = null;
-//        User user = authenticationController.getUserFromSession(session);
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
-        model.addAttribute("user", user);
-        //opportunity.setCreatorUserId(user.getId());
+        opportunity.setCreatorUserId(user.getId());
         opportunity.setName(user.getOrganizationName());
         opportunityRepository.save(opportunity);
         return "redirect:/home";
