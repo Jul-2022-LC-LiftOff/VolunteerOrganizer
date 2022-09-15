@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.net.ssl.HandshakeCompletedEvent;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class CreateController {
     @Autowired
     private OpportunityRepository opportunityRepository;
 
+    @Autowired
+    AuthenticationController authenticationController;
+
     @GetMapping
     public String renderCreateOpportunityForm(Model model){
         model.addAttribute("title", "Create Volunteer Opportunity:");
@@ -33,16 +37,16 @@ public class CreateController {
     }
 
     @PostMapping
-    public String processCreateOpportunityForm(@ModelAttribute @Valid Opportunity opportunity,Errors errors, Model model){
+    public String processCreateOpportunityForm(HttpServletRequest request,@ModelAttribute @Valid Opportunity opportunity, Errors errors, Model model){
+
       if(errors.hasErrors()) {
           model.addAttribute("title", "Create Volunteer Opportunity:");
           return "create";
       }
-        HandshakeCompletedEvent request = null;
-        HttpSession session = (HttpSession) request.getSession();
-        AuthenticationController authenticationController = null;
+        HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
         opportunity.setCreatorUserId(user.getId());
+        opportunity.setName(user.getOrganizationName());
         opportunityRepository.save(opportunity);
         return "redirect:/home";
     }
