@@ -64,44 +64,6 @@ public class HomeController {
         return "search-results";
     }
 
-
-
-    @GetMapping("/volunteer/sign-up")
-    public String volunteerSignup(HttpServletRequest request, @RequestParam Integer opportunityId, Model model){
-        HttpSession session = request.getSession();
-        User user = authenticationController.getUserFromSession(session);
-
-        Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
-
-        if(result.isEmpty()) {
-            model.addAttribute("title", "Home");
-            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Volunteer Opportunity Does Not Exist.");
-            return "home";
-        }
-
-        Opportunity opportunity = result.get();
-        OpportunityUserDTO opportunityVolunteer = new OpportunityUserDTO();
-        opportunityVolunteer.setOpportunity(opportunity);
-
-        if (!opportunity.getVolunteers().contains(user)) {
-            if (opportunity.getNumVolunteerSlotsRemaining() > 0) {
-                opportunity.addVolunteer(user);
-                opportunityRepository.save(opportunity);
-                model.addAttribute("title", "Home");
-                model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
-                return "home";
-            } else {
-                model.addAttribute("title", "Home");
-                model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! No remaining volunteer slots.");
-                return "home";
-            }
-        } else {
-            model.addAttribute("title", "Home");
-            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
-            return "home";
-        }
-    }
-
     @GetMapping("/redirect/access-denied")
     public String displayHomeRedirectAccessDenied(HttpServletRequest request, Model model) {
 

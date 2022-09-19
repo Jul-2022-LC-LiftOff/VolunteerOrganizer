@@ -86,5 +86,34 @@ public class VolunteerController {
         }
     }
     
+    @GetMapping("/unregister")
+    public String volunteerUnregister(HttpServletRequest request, @RequestParam Integer opportunityId, Model model){
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+
+        Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
+
+        if(result.isEmpty()) {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
+            return "home";
+        }
+
+        Opportunity opportunity = result.get();
+        OpportunityUserDTO opportunityVolunteer = new OpportunityUserDTO();
+        opportunityVolunteer.setOpportunity(opportunity);
+
+        if (opportunity.getVolunteers().contains(user)) {
+            opportunity.removeVolunteer(user);
+            opportunityRepository.save(opportunity);
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageSuccess", "Unregistration Successful!");
+            return "home";
+        } else {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "You are not registered for this volunteer opportunity! Cannot unregister.");
+            return "home";
+        }
+    }
     
 }
