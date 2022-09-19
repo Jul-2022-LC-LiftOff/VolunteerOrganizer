@@ -48,9 +48,6 @@ public class manageController {
             opportunityRepository.delete(opportunity);
 
         }
-        //opportunityRepository.deleteById(opportunityId);
-//        Iterable<Opportunity>  opportunity = opportunityRepository.findAll();
-//        model.addAttribute("opportunities", opportunity);
 
         return "redirect:/manage";
     }
