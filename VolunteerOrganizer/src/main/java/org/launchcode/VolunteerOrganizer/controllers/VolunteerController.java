@@ -3,6 +3,7 @@ package org.launchcode.VolunteerOrganizer.controllers;
 import org.launchcode.VolunteerOrganizer.models.Opportunity;
 import org.launchcode.VolunteerOrganizer.models.User;
 import org.launchcode.VolunteerOrganizer.models.data.OpportunityRepository;
+import org.launchcode.VolunteerOrganizer.models.dto.OpportunityUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("volunteer")
 @Controller
@@ -46,13 +48,43 @@ public class VolunteerController {
             model.addAttribute("noOpportunitiesMessage", "You are not currently registered for any volunteer opportunities!");
             return "registered-opportunities";
         }
-
-        // List<Opportunity> opportunity = user.getOpportunitiesForUser(opportunityRepository);
-        // model.addAttribute("user", user );
-
-        // model.addAttribute("opportunities", opportunity);
     }
 
+    @GetMapping("/sign-up")
+    public String volunteerSignup(HttpServletRequest request, @RequestParam Integer opportunityId, Model model){
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+
+        Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
+
+        if(result.isEmpty()) {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Volunteer Opportunity Does Not Exist.");
+            return "home";
+        }
+
+        Opportunity opportunity = result.get();
+        OpportunityUserDTO opportunityVolunteer = new OpportunityUserDTO();
+        opportunityVolunteer.setOpportunity(opportunity);
+
+        if (!opportunity.getVolunteers().contains(user)) {
+            if (opportunity.getNumVolunteerSlotsRemaining() > 0) {
+                opportunity.addVolunteer(user);
+                opportunityRepository.save(opportunity);
+                model.addAttribute("title", "Home");
+                model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
+                return "home";
+            } else {
+                model.addAttribute("title", "Home");
+                model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! No remaining volunteer slots.");
+                return "home";
+            }
+        } else {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
+            return "home";
+        }
+    }
     
     
 }
