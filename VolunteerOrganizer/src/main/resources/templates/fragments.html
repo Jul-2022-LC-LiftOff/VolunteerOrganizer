@@ -17,6 +17,7 @@
         <a th:href="@{/list}">List</a></li>
         <a th:href="@{/logout}">Logout</a></li>
         <a th:href="@{/delete}">Delete Account</a></li>
+        <a th:href="@{/manage}">Manage Opportunities</a></li>
     </div>
     <h2 style="color:brown" th:text ="${title}"></h2><br>
 </div>
@@ -98,6 +99,13 @@
                         <button>Sign Up to Volunteer</button>
                     </a>
                 </th:block>
+
+                <th:block th:if="${user.getAccountType() == 'organization' and user.getId() == opportunity.getCreatorUserId()}">
+                    <a th:href="'/manage/delete?opportunityId=' + ${opportunity.id}">
+                        <button>Delete Opportunity</button>
+                    </a>
+                </th:block>
+
                 <br>
             </td>
         </tr>
