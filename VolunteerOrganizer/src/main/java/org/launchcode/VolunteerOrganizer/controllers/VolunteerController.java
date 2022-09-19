@@ -45,7 +45,6 @@ public class VolunteerController {
             model.addAttribute("user", user);
             return "registered-opportunities";
         } else {
-            model.addAttribute("noOpportunitiesMessage", "You are not currently registered for any volunteer opportunities!");
             return "registered-opportunities";
         }
     }
