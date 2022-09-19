@@ -21,7 +21,6 @@ public class manageController {
     @Autowired
     AuthenticationController authenticationController;
 
-    //manage opportunities
     @GetMapping("manage")
     public String manageOpportunities(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
@@ -29,7 +28,6 @@ public class manageController {
         List<Opportunity> opportunity = user.getOpportunitiesForUser(opportunityRepository);
         model.addAttribute("user", user );
 
-        // model.addAttribute("heading", "Opportunities for: "+ opportunity.ge );
         model.addAttribute("opportunities", opportunity);
         return "manage";
     }
