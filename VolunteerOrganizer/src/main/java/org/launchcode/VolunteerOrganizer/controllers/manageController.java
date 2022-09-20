@@ -88,7 +88,7 @@ public class manageController {
     }
 
     @PostMapping("manage/edit-opportunity")
-    public String processEditOpportunityForm(HttpServletRequest request,@ModelAttribute @Valid Opportunity opportunityEdits, @RequestParam int opportunityId, Errors errors, Model model){
+    public String processEditOpportunityForm(HttpServletRequest request,@ModelAttribute @Valid Opportunity opportunityEdits, Errors errors, @RequestParam int opportunityId, Model model){
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Edit Volunteer Opportunity:");
