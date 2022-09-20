@@ -19,7 +19,7 @@ import net.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefi
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-import java.util.Optional;
+import java.util.*;
 
 @RequestMapping("home")
 @Controller
@@ -45,6 +45,7 @@ public class HomeController {
     public String displaySearchResults(HttpServletRequest request, Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end, @RequestParam(required = false) String withVolunteerSlotsAvailable) throws ParseException {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
+        HashMap<String, List<Opportunity>> opportunityByOrganization = new HashMap<>();
         
         Iterable<Opportunity> opportunities;
 
@@ -56,10 +57,23 @@ public class HomeController {
             opportunities = OpportunityData.findByVolunteerSlotsAvailable(withVolunteerSlotsAvailable, opportunities);
         }
 
+        for (Opportunity x: opportunities) {
+            if (opportunityByOrganization.containsKey(x.getName())) {
+                List<Opportunity> orgOpportunities = opportunityByOrganization.get(x.getName());
+                orgOpportunities.add(x);
+                opportunityByOrganization.put(x.getName(), orgOpportunities );
+            } else {
+                List<Opportunity> orgOpportunities = new ArrayList<>();
+                orgOpportunities.add(x);
+                opportunityByOrganization.put(x.getName(),orgOpportunities);
+            }
+        }
+
         model.addAttribute("title", "Home");
         model.addAttribute("resultsTitle", "Search results:");
         model.addAttribute("opportunities", opportunities);
         model.addAttribute("user", user);
+        model.addAttribute("opportunityByOrganization", opportunityByOrganization);
 
         return "search-results";
     }

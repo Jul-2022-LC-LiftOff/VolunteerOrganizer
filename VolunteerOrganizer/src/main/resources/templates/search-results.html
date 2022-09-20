@@ -16,8 +16,27 @@
 
 </div>
 
-<h4 th:text ="${'Number of opportunities: ' + opportunities.size()}"></h4>
-<div th:replace="fragments :: opportunity-list"></div>
+<h2 style="color:green" th:text ="${'There are ' + opportunities.size() + ' matching volunteer opportunities!'}"></h2>
+<h3>Organization, Activity and Date (click link for further detail)</h3>
+<!--<li th:each="orgNames : ${organizationNames}">-->
+<!--    <li th:each="opportunity : ${opportunities}">-->
+<!--        <a th:href="@{'/list-opportunity/' + ${opportunity.name}}"  th:text="${opportunity.name}"></a>-->
+<!--    </li>-->
+<!--</li>-->
+
+<table>
+    <tr th:each="element : ${opportunityByOrganization}">
+        <td th:text="${element.key}">keyvalue</td>
+        <table>
+            <tr th:each="opportunity : ${element.value}">
+                <a th:href="@{'/list-opportunity/' + ${opportunity.name}}"  >
+                    <td th:text="${opportunity.description}">Some name</td>
+                    <td th:text="${opportunity.startDate}">Some name</td>
+                </a>
+            </tr>
+        </table>
+    </tr>
+</table>
 
 </body>
 </html>
