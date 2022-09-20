@@ -110,7 +110,4 @@ public class manageController {
         opportunityRepository.save(opportunity);
         return "redirect:/manage";
     }
-
-
-
 }
