@@ -69,9 +69,7 @@ public class VolunteerController {
             if (opportunity.getNumVolunteerSlotsRemaining() > 0) {
                 opportunity.addVolunteer(user);
                 opportunityRepository.save(opportunity);
-                model.addAttribute("title", "Home");
-                model.addAttribute("redirectMessageSuccess", "Sign Up Successful!");
-                return "home";
+                return "redirect:./registered-opportunities";
             } else {
                 model.addAttribute("title", "Home");
                 model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! No remaining volunteer slots.");
@@ -104,9 +102,7 @@ public class VolunteerController {
         if (opportunity.getVolunteers().contains(user)) {
             opportunity.removeVolunteer(user);
             opportunityRepository.save(opportunity);
-            model.addAttribute("title", "Home");
-            model.addAttribute("redirectMessageSuccess", "Unregistration Successful!");
-            return "home";
+            return "redirect:./registered-opportunities";
         } else {
             model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "You are not registered for this volunteer opportunity! Cannot unregister.");

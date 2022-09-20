@@ -45,18 +45,48 @@ public class manageController {
             Opportunity opportunity = (Opportunity) optOpportunity.get();
             if (user.getId() == opportunity.getCreatorUserId()) {
                 opportunityRepository.delete(opportunity);
-                model.addAttribute("title", "Manage Volunteer Opportunities");
-                model.addAttribute("redirectMessageSuccess", "Volunteer Opportunity Deleted Successfully!");
-                return "manage";
+                return "redirect:/manage";
+            } else {
+                model.addAttribute("title", "Home");
+                model.addAttribute("redirectMessageFailure", "You are not the creator of this Volunteer Opportunity! Cannot delete.");
+                return "home";
+            }
+        } else {
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
+            return "home";
+        }
+    }
+
+    @GetMapping("manage/edit-opportunity")
+    public String displayEditOpportunity(HttpServletRequest request,@RequestParam int opportunityId, Model model ) {
+
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", user );
+
+        Optional optOpportunity = opportunityRepository.findById(opportunityId);
+        if (optOpportunity.isPresent()) {
+            Opportunity opportunity = (Opportunity) optOpportunity.get();
+            if (user.getId() == opportunity.getCreatorUserId()) {
+                // opportunityRepository.delete(opportunity);
+                model.addAttribute("title", "Edit Volunteer Opportunity");
+                model.addAttribute("opportunity", opportunity);
+                // model.addAttribute("redirectMessageSuccess", "Volunteer Opportunity Deleted Successfully!");
+
+
+
+
+                return "edit-opportunity";
             } else {
                 model.addAttribute("title", "Manage Volunteer Opportunities");
-                model.addAttribute("redirectMessageFailure", "You are not the creator of this Volunteer Opportunity! Cannot delete.");
-                return "manage";
+                model.addAttribute("redirectMessageFailure", "You are not the creator of that Volunteer Opportunity! Cannot edit.");
+                return "home";
             }
         } else {
             model.addAttribute("title", "Manage Volunteer Opportunities");
             model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
-            return "manage";
+            return "home";
         }
     }
 }

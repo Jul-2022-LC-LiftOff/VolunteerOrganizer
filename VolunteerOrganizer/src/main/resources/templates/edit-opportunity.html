@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Opportunity</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
+</head>
+<body class="container">
+<div th:replace="fragments :: page-header"></div>
+
+        <form method="post">
+            <div class="form-group">
+                <label>Opportunity Description<input  th:field= "${opportunity.description}" ></label><br><br>
+                <p class="error"  th:errors="${opportunity.description}"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select th:field= "${opportunity.category}" id="category" >
+                    <option value="" >Select Category</option>
+                    <option value="childcare">Childcare</option>
+                    <option value="medical">Medical and Healthcare</option>
+                    <option value="animal">Animal Care</option>
+                    <option value="environment">Environment</option>
+                    <option value="construction">Construction</option>
+                    <option value="arts">Arts and Music</option>
+                    <option value="refugee">Refugee Support</option>
+                    <option value="women">Women's Empowerment</option>
+                    <option value="community">Community Development</option>
+                    <option value="elderly">Eldercare</option>
+                    <option value="special">Special Needs Care</option>
+                </select><br><br>
+                <p class="error"  th:errors="${opportunity.category}"></p>
+            </div>
+
+            <div class="form-group">
+                <label>City<input type="text" th:field= "${opportunity.city}" ></label><br><br>
+                <p class="error"  th:errors="${opportunity.city}"></p>
+            </div>
+
+            <div class="form-group">
+                <label>Start Date<input type="date" th:field= "${opportunity.startDate}" ></label><br><br>
+                <p class="error"  th:errors="${opportunity.startDate}"></p>
+            </div>
+            <div class="form-group">
+                <label>End Date<input type="date" th:field= "${opportunity.endDate}"></label><br><br>
+                <p class="error"  th:errors="${opportunity.endDate}"></p>
+            </div>
+
+            <div class="form-group">
+                <label>Hours/day<input type="number" min="1" th:field= "${opportunity.hours}"></label><br><br>
+                <p class="error"  th:errors="${opportunity.hours}"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age Group</label>
+                <select th:field= "${opportunity.age}" id="age" >
+                    <option value=""  >Select Age Group</option>
+                    <option value="student">Student</option>
+                    <option value="adult">Adult</option>
+                </select><br><br>
+                <p class="error"  th:errors="${opportunity.age}"></p>
+            </div>
+
+            <div class="form-group">
+                <label>Number of Volunteers Needed<input type="number" value="1" min="1" th:field= "${opportunity.numVolunteersNeeded}"></label><br><br>
+                <p class="error"  th:errors="${opportunity.numVolunteersNeeded}"></p>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create Opportunity" class="btn btn-success">
+            </div>
+        </form>
+</body>
+</html>
