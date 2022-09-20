@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -26,7 +27,7 @@ public class Opportunity extends AbstractEntity{
 
     private int creatorUserId;
     @NotBlank(message = "Description is required")
-    @Size(min = 5, max = 1000, message = "Description too long or too short!")
+    @Size(min = 5, max = 1000, message = "Description too long or too short! Must be between 5 and 1,000 characters in length")
     private String description;
 
     @NotBlank(message = "Category is required")

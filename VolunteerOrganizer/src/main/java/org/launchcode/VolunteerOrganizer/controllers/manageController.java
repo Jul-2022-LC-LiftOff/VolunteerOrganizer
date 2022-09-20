@@ -6,10 +6,13 @@ import org.launchcode.VolunteerOrganizer.models.data.OpportunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +62,7 @@ public class manageController {
     }
 
     @GetMapping("manage/edit-opportunity")
-    public String displayEditOpportunity(HttpServletRequest request,@RequestParam int opportunityId, Model model ) {
+    public String displayEditOpportunityForm(HttpServletRequest request,@RequestParam int opportunityId, Model model ) {
 
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
@@ -69,14 +72,8 @@ public class manageController {
         if (optOpportunity.isPresent()) {
             Opportunity opportunity = (Opportunity) optOpportunity.get();
             if (user.getId() == opportunity.getCreatorUserId()) {
-                // opportunityRepository.delete(opportunity);
                 model.addAttribute("title", "Edit Volunteer Opportunity");
                 model.addAttribute("opportunity", opportunity);
-                // model.addAttribute("redirectMessageSuccess", "Volunteer Opportunity Deleted Successfully!");
-
-
-
-
                 return "edit-opportunity";
             } else {
                 model.addAttribute("title", "Manage Volunteer Opportunities");
@@ -89,4 +86,32 @@ public class manageController {
             return "home";
         }
     }
+
+    @PostMapping("manage/edit-opportunity")
+    public String processEditOpportunityForm(HttpServletRequest request,@ModelAttribute @Valid Opportunity opportunityEdits, @RequestParam int opportunityId, Errors errors, Model model){
+
+        if(errors.hasErrors()) {
+            model.addAttribute("title", "Edit Volunteer Opportunity:");
+            return "edit-opportunity";
+        }
+
+        Optional optOpportunity = opportunityRepository.findById(opportunityId);
+        Opportunity opportunity = (Opportunity) optOpportunity.get();
+
+        opportunity.setAge(opportunityEdits.getAge());
+        opportunity.setCategory(opportunityEdits.getCategory());  
+        opportunity.setCity(opportunityEdits.getCity());
+        opportunity.setDescription(opportunityEdits.getDescription());
+        opportunity.setEndDate(opportunityEdits.getEndDate());
+        opportunity.setHours(opportunityEdits.getHours());
+        opportunity.setNumVolunteersNeeded(opportunityEdits.getNumVolunteersNeeded());
+        opportunity.setStartDate(opportunityEdits.getStartDate());
+      
+
+        opportunityRepository.save(opportunity);
+        return "redirect:/manage";
+    }
+
+
+
 }
