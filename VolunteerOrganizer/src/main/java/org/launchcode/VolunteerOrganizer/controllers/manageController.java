@@ -107,7 +107,6 @@ public class manageController {
         opportunity.setNumVolunteersNeeded(opportunityEdits.getNumVolunteersNeeded());
         opportunity.setStartDate(opportunityEdits.getStartDate());
       
-
         opportunityRepository.save(opportunity);
         return "redirect:/manage";
     }
