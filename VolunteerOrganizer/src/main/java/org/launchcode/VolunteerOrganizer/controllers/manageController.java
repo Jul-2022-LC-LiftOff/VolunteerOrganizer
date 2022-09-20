@@ -26,6 +26,7 @@ public class manageController {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
         List<Opportunity> opportunity = user.getOpportunitiesForUser(opportunityRepository);
+        model.addAttribute("title", "Manage Volunteer Opportunities");
         model.addAttribute("user", user );
         model.addAttribute("manageOpportunityButtons", true);
         model.addAttribute("opportunities", opportunity);
@@ -42,11 +43,20 @@ public class manageController {
         Optional optOpportunity = opportunityRepository.findById(opportunityId);
         if (optOpportunity.isPresent()) {
             Opportunity opportunity = (Opportunity) optOpportunity.get();
-
-            opportunityRepository.delete(opportunity);
-
+            if (user.getId() == opportunity.getCreatorUserId()) {
+                opportunityRepository.delete(opportunity);
+                model.addAttribute("title", "Manage Volunteer Opportunities");
+                model.addAttribute("redirectMessageSuccess", "Volunteer Opportunity Deleted Successfully!");
+                return "manage";
+            } else {
+                model.addAttribute("title", "Manage Volunteer Opportunities");
+                model.addAttribute("redirectMessageFailure", "You are not the creator of this Volunteer Opportunity! Cannot delete.");
+                return "manage";
+            }
+        } else {
+            model.addAttribute("title", "Manage Volunteer Opportunities");
+            model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
+            return "manage";
         }
-
-        return "redirect:/manage";
     }
 }

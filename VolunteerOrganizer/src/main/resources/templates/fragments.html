@@ -23,6 +23,11 @@
     <h2 style="color:brown" th:text ="${title}"></h2><br>
 </div>
 
+<div th:fragment="redirect-message">
+    <h4 style="color:red" th:text ="${redirectMessageFailure}"></h4>
+    <h4 style="color:green" th:text ="${redirectMessageSuccess}"></h4>
+</div>
+
 <div th:fragment="search-form">
     <h3>Search for Volunteer Opportunity</h3>
 
