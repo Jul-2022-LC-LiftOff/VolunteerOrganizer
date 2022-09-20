@@ -105,12 +105,16 @@
                         <button>Unregister</button>
                     </a>
                 </th:block>
-                <th:block th:if="${user.getAccountType() == 'organization' and user.getId() == opportunity.getCreatorUserId()}">
-                    <a th:href="'/manage/delete?opportunityId=' + ${opportunity.id}">
-                        <button>Delete Opportunity</button>
-                    </a>
+                <th:block th:unless="${manageOpportunityButtons == null}">
+                    <th:block th:if="${user.getAccountType() == 'organization' and user.getId() == opportunity.getCreatorUserId() and manageOpportunityButtons == true}">
+                        <a th:href="'/manage/edit?opportunityId=' + ${opportunity.id}">
+                            <button>Edit Opportunity</button>
+                        </a>
+                        <a th:href="'/manage/delete?opportunityId=' + ${opportunity.id}">
+                            <button onclick="return confirm('Are you sure? The Opportunity will be deleted and all Volunteers unregistered.')">Delete Opportunity</button>
+                        </a>
+                    </th:block>
                 </th:block>
-
                 <br>
             </td>
         </tr>

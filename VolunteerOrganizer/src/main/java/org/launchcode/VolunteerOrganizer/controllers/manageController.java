@@ -27,7 +27,7 @@ public class manageController {
         User user = authenticationController.getUserFromSession(session);
         List<Opportunity> opportunity = user.getOpportunitiesForUser(opportunityRepository);
         model.addAttribute("user", user );
-
+        model.addAttribute("manageOpportunityButtons", true);
         model.addAttribute("opportunities", opportunity);
         return "manage";
     }
