@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Opportunity</title>
+</head>
+<body>
+<div th:replace="fragments :: page-header"></div>
+<th:block th:if = "${opportunities == null}">
+    <h4 th:text ="${'You are not registered for any volunteer opportunities!'}"></h4>
+</th:block>
+<th:block th:unless = "${opportunities == null}">
+    <h4 th:text ="${'Number of opportunities currently registered for: ' + opportunities.size()}"></h4>
+</th:block>
+<div th:replace="fragments :: opportunity-list"></div>
+
+</body>
+</html>

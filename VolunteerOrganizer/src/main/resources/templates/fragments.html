@@ -18,6 +18,7 @@
         <a th:href="@{/logout}">Logout</a></li>
         <a th:href="@{/delete}">Delete Account</a></li>
         <a th:href="@{/manage}">Manage Opportunities</a></li>
+        <a th:href="@{/volunteer/registered-opportunities}">View Registered Opportunities</a></li>
     </div>
     <h2 style="color:brown" th:text ="${title}"></h2><br>
 </div>
@@ -94,12 +95,16 @@
                 <p th:text="${'Age: ' + opportunity.age}"></p>
                 <p th:text="${'Total Number of Volunteers Needed: ' + opportunity.numVolunteersNeeded}"></p>
                 <p th:text="${'Volunteer Slots Remaining: ' + opportunity.getNumVolunteerSlotsRemaining()}"></p>
-                <th:block th:if="${opportunity.getNumVolunteerSlotsRemaining() > 0 and user.getAccountType() == 'volunteer'}">
-                    <a th:href="'/home/volunteer/sign-up?opportunityId=' + ${opportunity.id}">
+                <th:block th:if="${opportunity.getNumVolunteerSlotsRemaining() > 0 and user.getAccountType() == 'volunteer' and !opportunity.getVolunteers().contains(user)}">
+                    <a th:href="'/volunteer/sign-up?opportunityId=' + ${opportunity.id}">
                         <button>Sign Up to Volunteer</button>
                     </a>
                 </th:block>
-
+                <th:block th:if="${user.getAccountType() == 'volunteer' and opportunity.getVolunteers().contains(user)}">
+                    <a th:href="'/volunteer/unregister?opportunityId=' + ${opportunity.id}">
+                        <button>Unregister</button>
+                    </a>
+                </th:block>
                 <th:block th:if="${user.getAccountType() == 'organization' and user.getId() == opportunity.getCreatorUserId()}">
                     <a th:href="'/manage/delete?opportunityId=' + ${opportunity.id}">
                         <button>Delete Opportunity</button>

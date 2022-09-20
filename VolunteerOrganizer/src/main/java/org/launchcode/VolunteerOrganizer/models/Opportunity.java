@@ -146,6 +146,10 @@ public class Opportunity extends AbstractEntity{
         this.volunteers.add(volunteer);
     }
 
+    public void removeVolunteer(User volunteer) {
+        this.volunteers.remove(volunteer);
+    }
+
     public int getCreatorUserId() {
         return creatorUserId;
     }
