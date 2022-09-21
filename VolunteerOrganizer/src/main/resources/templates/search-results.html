@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns:font-size="http://www.w3.org/1999/xhtml"
+      xmlns:font-weight="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Home</title>
@@ -16,25 +17,19 @@
 
 </div>
 
-<h2 style="color:green" th:text ="${'There are ' + opportunities.size() + ' matching volunteer opportunities!'}"></h2>
-<h3>Organization, Activity and Date (click link for further detail)</h3>
-<!--<li th:each="orgNames : ${organizationNames}">-->
-<!--    <li th:each="opportunity : ${opportunities}">-->
-<!--        <a th:href="@{'/list-opportunity/' + ${opportunity.name}}"  th:text="${opportunity.name}"></a>-->
-<!--    </li>-->
-<!--</li>-->
+<h2 style="color:green" th:text ="${'There are ' + opportunities.size() + ' matching volunteer opportunities'}"></h2>
+<p style="color:green"><em>Click on link for further detail and to sign up!</em></p>
 
 <table>
     <tr th:each="element : ${opportunityByOrganization}">
-        <td th:text="${element.key}">keyvalue</td>
+        <td> <b  th:text= "${element.key}">key value</b></td>
         <table>
             <tr th:each="opportunity : ${element.value}">
-                <a th:href="@{'/list-opportunity/' + ${opportunity.name}}"  >
-                    <td th:text="${opportunity.description}">Some name</td>
-                    <td th:text="${opportunity.startDate}">Some name</td>
-                </a>
+                    <td> <a style="color:green" th:href="@{'/search-results-opportunity/' + ${opportunity.startDate}}" th:text="${opportunity.startDate}"></a></td>
+                    <td th:text=${opportunity.description}>opportunity description</td>
             </tr>
         </table>
+        <br>
     </tr>
 </table>
 
