@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments :: styling"></div>
+</head>
+<body class="container">
+<div th:replace="fragments :: page-header"></div>
+
+<table class="table table-striped">
+<tr>
+    <td>Username:</td>
+    <td th:text ="${user.username}"></td>
+</tr>
+<tr>
+    <td>Account Type:</td>
+    <td th:text ="${user.accountType}"></td>
+</tr>
+<th:block th:unless="${user.organizationName == null}">
+    <tr>
+        <td>Affiliated Organization:</td>
+        <td th:text ="${user.organizationName}"></td>
+    </tr>
+</th:block>
+</table>
+<br />
+<br />
+<br />
+<h4 style="font-weight:bold">Danger Zone:</h4>
+<hr />
+<a th:href="'/account/delete'">
+    <button th:if = "${user.accountType == 'organization'}" class="btn btn-danger" onclick="return confirm('Caution: This action cannot be undone! All created volunteer opportunities will be deleted and account will be permenantly deleted. Continue with deletion?')">Delete Account</button>
+    <button th:if = "${user.accountType == 'volunteer'}" class="btn btn-danger" onclick="return confirm('Caution: This action cannot be undone! You will be unregistered from all volunteer opportunities and account will be permenantly deleted. Continue with deletion?')">Delete Account</button>
+</a>
+</body>
+</html>
