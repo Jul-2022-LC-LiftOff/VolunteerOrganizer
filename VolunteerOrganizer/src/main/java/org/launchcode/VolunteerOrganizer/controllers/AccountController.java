@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,19 +49,20 @@ public class AccountController {
             for (Opportunity opportunity : opportunities) {
                 Optional optOpportunity = opportunityRepository.findById(opportunity.getId());
                 if (optOpportunity.isPresent()) {
-                    Opportunity opportunityToDelete = (Opportunity) optOpportunity.get();
-                    if (user.getId() == opportunityToDelete.getCreatorUserId()) {
-                        opportunityRepository.delete(opportunityToDelete);
-                    }
+                    Opportunity opportunityToDelete = (Opportunity) optOpportunity.get(); 
+                    opportunityRepository.delete(opportunityToDelete);
                 }   
             }
-        } else if (user.getAccountType() == "volunteer") {
-
+        } else if (user.getAccountType().equals("volunteer")) {
+            Iterable<Opportunity> allOpportunities = opportunityRepository.findAll();
+            for (Opportunity opportunity : allOpportunities) {
+                if (opportunity.getVolunteers().contains(user)) {
+                    opportunity.removeVolunteer(user);
+                }
+            }
         }
-        
         session.invalidate();
         userRepository.delete(user);
         return "redirect:/";
     }
-    
 }
