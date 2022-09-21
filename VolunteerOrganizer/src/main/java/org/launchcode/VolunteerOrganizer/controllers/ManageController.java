@@ -76,12 +76,12 @@ public class ManageController {
                 model.addAttribute("opportunity", opportunity);
                 return "create";
             } else {
-                model.addAttribute("title", "Manage Volunteer Opportunities");
+                model.addAttribute("title", "Home");
                 model.addAttribute("redirectMessageFailure", "You are not the creator of that Volunteer Opportunity! Cannot edit.");
                 return "home";
             }
         } else {
-            model.addAttribute("title", "Manage Volunteer Opportunities");
+            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
             return "home";
         }
