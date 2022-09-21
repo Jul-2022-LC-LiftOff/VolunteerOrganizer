@@ -140,13 +140,13 @@ public class AuthenticationController {
         return "redirect:/";
     }
 
-    @GetMapping("/delete")
-    public String deleteAccount(HttpServletRequest request){
-        User user = getUserFromSession(request.getSession());
+    // @GetMapping("/delete")
+    // public String deleteAccount(HttpServletRequest request){
+    //     User user = getUserFromSession(request.getSession());
 
 
-        request.getSession().invalidate();
-        userRepository.delete(user);
-        return "redirect:/";
-    }
+    //     request.getSession().invalidate();
+    //     userRepository.delete(user);
+    //     return "redirect:/";
+    // }
 }
