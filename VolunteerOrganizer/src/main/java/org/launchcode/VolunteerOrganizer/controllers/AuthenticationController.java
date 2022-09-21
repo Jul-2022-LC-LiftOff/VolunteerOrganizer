@@ -57,11 +57,12 @@ public class AuthenticationController {
     @GetMapping("/signup/{accountType}")
     public String index(Model model, @PathVariable String accountType) {
         CreateAccountDTO createAccountDTO = new CreateAccountDTO();
+        String title = "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User";
         createAccountDTO.setAccountType(accountType);
         if(accountType.equals("volunteer")) {
             createAccountDTO.setOrganizationName(null);
         }
-        model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
+        model.addAttribute("title", title);
         model.addAttribute("createAccountDTO", createAccountDTO);
         return "signup";
     }
@@ -71,9 +72,10 @@ public class AuthenticationController {
                                    Errors errors, HttpServletRequest request, Model model) {
 
         String accountType = createAccountDTO.getAccountType();
-        
+        String title = "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User";
+
         if (errors.hasErrors()) {
-            model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
+            model.addAttribute("title", title);
             return "signup";
         }
 
@@ -81,7 +83,7 @@ public class AuthenticationController {
 
         if (theUser != null) {
             errors.rejectValue("username", "user.invalid", "The given username already exists");
-            model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
+            model.addAttribute("title", title);
             return "signup";
         }
 
@@ -91,7 +93,7 @@ public class AuthenticationController {
         if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "password.invalid", "" +
                     "Passwords do not match.");
-            model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
+            model.addAttribute("title", title);
             return "signup";
         }
 
