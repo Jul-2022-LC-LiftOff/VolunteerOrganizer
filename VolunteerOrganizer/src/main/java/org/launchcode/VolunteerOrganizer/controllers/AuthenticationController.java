@@ -57,13 +57,12 @@ public class AuthenticationController {
     @GetMapping("/signup/{accountType}")
     public String index(Model model, @PathVariable String accountType) {
         CreateAccountDTO createAccountDTO = new CreateAccountDTO();
+        String title = "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User";
         createAccountDTO.setAccountType(accountType);
-        if(accountType == "volunteer") {
-            model.addAttribute("title", "Volunteer");
+        if(accountType.equals("volunteer")) {
             createAccountDTO.setOrganizationName(null);
-        } else {
-            model.addAttribute("title", "Organization");
         }
+        model.addAttribute("title", title);
         model.addAttribute("createAccountDTO", createAccountDTO);
         return "signup";
     }
@@ -72,17 +71,20 @@ public class AuthenticationController {
     public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
                                    Errors errors, HttpServletRequest request, Model model) {
 
+        String accountType = createAccountDTO.getAccountType();
+        String title = "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User";
+
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Log In");
-            return "index";
+            model.addAttribute("title", title);
+            return "signup";
         }
 
         User theUser = userRepository.findByUsername(createAccountDTO.getUsername());
 
         if (theUser != null) {
             errors.rejectValue("username", "user.invalid", "The given username already exists");
-            model.addAttribute("title", "Log In");
-            return "index";
+            model.addAttribute("title", title);
+            return "signup";
         }
 
         String password = createAccountDTO.getPassword();
@@ -91,8 +93,8 @@ public class AuthenticationController {
         if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "password.invalid", "" +
                     "Passwords do not match.");
-            model.addAttribute("title", "Log In");
-            return "index";
+            model.addAttribute("title", title);
+            return "signup";
         }
 
         User newUser = new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
