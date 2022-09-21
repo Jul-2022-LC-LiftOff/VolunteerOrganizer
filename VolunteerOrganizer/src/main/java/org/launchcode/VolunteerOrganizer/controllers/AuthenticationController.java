@@ -58,22 +58,22 @@ public class AuthenticationController {
     public String index(Model model, @PathVariable String accountType) {
         CreateAccountDTO createAccountDTO = new CreateAccountDTO();
         createAccountDTO.setAccountType(accountType);
-        if(accountType == "volunteer") {
-            //model.addAttribute("title", "Volunteer");
+        if(accountType.equals("volunteer")) {
             createAccountDTO.setOrganizationName(null);
-        } else {
-            //model.addAttribute("title", "Organization");
         }
+        model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
         model.addAttribute("createAccountDTO", createAccountDTO);
         return "signup";
     }
 
     @PostMapping("/signup/{accountType}")
-    public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO, @PathVariable String accountType,
+    public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
                                    Errors errors, HttpServletRequest request, Model model) {
 
+        String accountType = createAccountDTO.getAccountType();
+        
         if (errors.hasErrors()) {
-            //model.addAttribute("title", "Log In");
+            model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
             return "signup";
         }
 
@@ -81,7 +81,7 @@ public class AuthenticationController {
 
         if (theUser != null) {
             errors.rejectValue("username", "user.invalid", "The given username already exists");
-            //model.addAttribute("title", "Log In");
+            model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
             return "signup";
         }
 
@@ -91,7 +91,7 @@ public class AuthenticationController {
         if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "password.invalid", "" +
                     "Passwords do not match.");
-            //model.addAttribute("title", "Log In");
+            model.addAttribute("title", "New " + accountType.substring(0, 1).toUpperCase() + accountType.substring(1) + " User");
             return "signup";
         }
 

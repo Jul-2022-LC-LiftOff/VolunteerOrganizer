@@ -12,7 +12,7 @@ public class CreateAccountDTO {
 
     @NotNull
     @NotBlank
-    @Size(min = 6, message = "Invalid password. Must be between at least 6 characters.")
+    @Size(min = 6, message = "Invalid password. Must be at least 6 characters.")
     private String password;
 
     private String verifyPassword;
