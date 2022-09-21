@@ -26,7 +26,7 @@
         <a th:href="@{/create}">Create Volunteer Opportunity</a>
         <a th:href="@{/manage}">Manage Opportunities</a></li>
     </div>
-    <h2 style="color:brown" th:text ="${title}"></h2><br>
+    <h2 style="color:brown" th:text ="${title}"></h2>
 </div>
 
 <div th:fragment="redirect-messages">
@@ -35,10 +35,10 @@
 </div>
 
 <div th:fragment="search-form">
-    <h3>Search for Volunteer Opportunity</h3>
+    <h2>Search for Volunteer Opportunity</h2>
 
     <form th:action="@{/home/results}" method = "post">
-        <h4>Filter by any number of fields:</h4>
+        <h3>Filter by any number of fields:</h3>
         <p><em>To see all opportunities, leave all fields blank.</em></p>
 
         <p>

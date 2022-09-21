@@ -9,16 +9,16 @@ import org.launchcode.VolunteerOrganizer.models.dto.OpportunityUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import net.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefined;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("home")
@@ -45,6 +45,7 @@ public class HomeController {
     public String displaySearchResults(HttpServletRequest request, Model model, @RequestParam String searchTerm, @RequestParam String category, @RequestParam String start, @RequestParam String end, @RequestParam(required = false) String withVolunteerSlotsAvailable) throws ParseException {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
+        HashMap<String, List<Opportunity>> opportunityByOrganization = new HashMap<>();
         
         Iterable<Opportunity> opportunities;
 
@@ -56,13 +57,48 @@ public class HomeController {
             opportunities = OpportunityData.findByVolunteerSlotsAvailable(withVolunteerSlotsAvailable, opportunities);
         }
 
+        for (Opportunity x: opportunities) {
+            if (opportunityByOrganization.containsKey(x.getName())) {
+                List<Opportunity> orgOpportunities = opportunityByOrganization.get(x.getName());
+                orgOpportunities.add(x);
+                opportunityByOrganization.put(x.getName(), orgOpportunities );
+            } else {
+                List<Opportunity> orgOpportunities = new ArrayList<>();
+                orgOpportunities.add(x);
+                opportunityByOrganization.put(x.getName(),orgOpportunities);
+            }
+        }
+
         model.addAttribute("title", "Home");
         model.addAttribute("resultsTitle", "Search results:");
         model.addAttribute("opportunities", opportunities);
         model.addAttribute("user", user);
+        model.addAttribute("opportunityByOrganization", opportunityByOrganization);
 
         return "search-results";
     }
+
+    @GetMapping("/search-results-opportunity/{opportunityId}")
+    public String searchOpportunityDetail(HttpServletRequest request, Model model, @PathVariable int opportunityId) {
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+
+        Optional<Opportunity> opportunity = opportunityRepository.findById(opportunityId);
+        if(!opportunity.isPresent()){
+            model.addAttribute("title", "Home");
+            model.addAttribute("redirectMessageFailure", "Volunteer Opportunity Does Not Exist.");
+            return "home";
+        }
+        Opportunity x = (Opportunity) opportunity.get();
+
+        model.addAttribute("user", user);
+        model.addAttribute("heading", "Volunteer Opportunity Detail: ");
+        model.addAttribute("opportunities", x);
+
+        return "search-results-opportunity";
+    }
+
+
 
     @GetMapping("/redirect/access-denied")
     public String displayHomeRedirectAccessDenied(HttpServletRequest request, Model model) {
