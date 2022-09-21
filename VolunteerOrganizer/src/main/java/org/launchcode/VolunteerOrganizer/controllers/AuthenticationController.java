@@ -59,30 +59,30 @@ public class AuthenticationController {
         CreateAccountDTO createAccountDTO = new CreateAccountDTO();
         createAccountDTO.setAccountType(accountType);
         if(accountType == "volunteer") {
-            model.addAttribute("title", "Volunteer");
+            //model.addAttribute("title", "Volunteer");
             createAccountDTO.setOrganizationName(null);
         } else {
-            model.addAttribute("title", "Organization");
+            //model.addAttribute("title", "Organization");
         }
         model.addAttribute("createAccountDTO", createAccountDTO);
         return "signup";
     }
 
     @PostMapping("/signup/{accountType}")
-    public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
+    public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO, @PathVariable String accountType,
                                    Errors errors, HttpServletRequest request, Model model) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Log In");
-            return "index";
+            //model.addAttribute("title", "Log In");
+            return "signup";
         }
 
         User theUser = userRepository.findByUsername(createAccountDTO.getUsername());
 
         if (theUser != null) {
             errors.rejectValue("username", "user.invalid", "The given username already exists");
-            model.addAttribute("title", "Log In");
-            return "index";
+            //model.addAttribute("title", "Log In");
+            return "signup";
         }
 
         String password = createAccountDTO.getPassword();
@@ -91,8 +91,8 @@ public class AuthenticationController {
         if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "password.invalid", "" +
                     "Passwords do not match.");
-            model.addAttribute("title", "Log In");
-            return "index";
+            //model.addAttribute("title", "Log In");
+            return "signup";
         }
 
         User newUser = new User(createAccountDTO.getUsername(), createAccountDTO.getPassword(),
