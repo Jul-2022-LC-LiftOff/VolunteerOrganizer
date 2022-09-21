@@ -7,5 +7,10 @@
 <body>
 <div th:replace="fragments :: page-header"></div>
 <div th:replace="fragments :: opportunity-list"></div>
+<th:block th:unless = "${opportunities == null}">
+    <th:block th:if = "${opportunities.isEmpty()}">
+        <h4 th:text ="${'You do not have any volunteer opportunities created!'}"></h4>
+    </th:block>
+</th:block>
 </body>
 </html>
