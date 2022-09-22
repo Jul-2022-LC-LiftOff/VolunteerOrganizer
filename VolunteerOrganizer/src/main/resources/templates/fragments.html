@@ -31,10 +31,22 @@
                 <div class="navbar-nav">
                     <a class="nav-link" th:href="@{/home}">Home</a>
                     <a class="nav-link" th:href="@{/list}">Opportunity List</a></li>
-                    <a class="nav-link" th:href="@{/volunteer/registered-opportunities}">View Registered
-                        Opportunities</a></li>
-                    <a class="nav-link" th:href="@{/create}">Create Volunteer Opportunity</a>
-                    <a class="nav-link" th:href="@{/manage}">Manage Opportunities</a></li>
+                    <th:block th:if = "${user == null}">
+                        <a class="nav-link" th:href="@{/volunteer/registered-opportunities}">View Registered
+                            Opportunities</a></li>
+                        <a class="nav-link" th:href="@{/create}">Create Volunteer Opportunity</a>
+                        <a class="nav-link" th:href="@{/manage}">Manage Opportunities</a></li>
+                    </th:block>
+                    <th:block th:unless = "${user == null}">
+                        <th:block th:if = "${user.getAccountType == 'volunteer'}">
+                            <a class="nav-link" th:href="@{/volunteer/registered-opportunities}">View Registered
+                                Opportunities</a></li>
+                        </th:block>
+                        <th:block th:if = "${user.getAccountType == 'organization'}">
+                            <a class="nav-link" th:href="@{/create}">Create Volunteer Opportunity</a>
+                            <a class="nav-link" th:href="@{/manage}">Manage Opportunities</a></li>
+                        </th:block>
+                    </th:block>
                     <a class="nav-link" th:href="@{/account}">Account</a></li>
                     <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </div>
