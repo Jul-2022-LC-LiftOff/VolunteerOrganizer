@@ -50,12 +50,10 @@ public class ManageController {
                 opportunityRepository.delete(opportunity);
                 return "redirect:";
             } else {
-                model.addAttribute("title", "Home");
                 model.addAttribute("redirectMessageFailure", "You are not the creator of that Volunteer Opportunity! Cannot delete.");
                 return "home";
             }
         } else {
-            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
             return "home";
         }
@@ -76,12 +74,10 @@ public class ManageController {
                 model.addAttribute("opportunity", opportunity);
                 return "create";
             } else {
-                model.addAttribute("title", "Home");
                 model.addAttribute("redirectMessageFailure", "You are not the creator of that Volunteer Opportunity! Cannot edit.");
                 return "home";
             }
         } else {
-            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
             return "home";
         }
