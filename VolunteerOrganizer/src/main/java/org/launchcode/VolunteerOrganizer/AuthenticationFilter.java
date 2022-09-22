@@ -21,7 +21,7 @@ public class AuthenticationFilter implements HandlerInterceptor {
     @Autowired
     AuthenticationController authenticationController;
 
-    private static final List<String> whitelist = Arrays.asList("/", "/login", "/logout", "/signup/volunteer", "/signup/organization");
+    private static final List<String> whitelist = Arrays.asList("/", "/login", "/logout", "/signup/volunteer", "/signup/organization", "src/main/resources/static/**");
     private static final List<String> organizationUserRequired = Arrays.asList("/create", "/manage");
     private static final List<String> volunteerUserRequired = Arrays.asList("/volunteer");
 
