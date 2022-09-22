@@ -56,7 +56,6 @@ public class VolunteerController {
         Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
 
         if(result.isEmpty()) {
-            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Volunteer Opportunity Does Not Exist.");
             return "home";
         }
@@ -71,12 +70,10 @@ public class VolunteerController {
                 opportunityRepository.save(opportunity);
                 return "redirect:./registered-opportunities";
             } else {
-                model.addAttribute("title", "Home");
                 model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! No remaining volunteer slots.");
                 return "home";
             }
         } else {
-            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Sign Up Unuccessful! Already registered for this volunteer opportunity.");
             return "home";
         }
@@ -90,7 +87,6 @@ public class VolunteerController {
         Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
 
         if(result.isEmpty()) {
-            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Unuccessful! Volunteer Opportunity Does Not Exist.");
             return "home";
         }
@@ -104,10 +100,8 @@ public class VolunteerController {
             opportunityRepository.save(opportunity);
             return "redirect:./registered-opportunities";
         } else {
-            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "You are not registered for this volunteer opportunity! Cannot unregister.");
             return "home";
         }
     }
-    
 }

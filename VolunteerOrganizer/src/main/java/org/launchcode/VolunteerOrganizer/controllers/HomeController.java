@@ -37,7 +37,6 @@ public class HomeController {
 
     @GetMapping("")
     public String displayHome(Model model) {
-        model.addAttribute("title", "Home");
         return "home";
     }
 
@@ -69,7 +68,6 @@ public class HomeController {
             }
         }
 
-        model.addAttribute("title", "Home");
         model.addAttribute("resultsTitle", "Search results:");
         model.addAttribute("opportunities", opportunities);
         model.addAttribute("user", user);
@@ -85,7 +83,6 @@ public class HomeController {
 
         Optional<Opportunity> opportunity = opportunityRepository.findById(opportunityId);
         if(!opportunity.isPresent()){
-            model.addAttribute("title", "Home");
             model.addAttribute("redirectMessageFailure", "Volunteer Opportunity Does Not Exist.");
             return "home";
         }
@@ -106,7 +103,6 @@ public class HomeController {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
 
-        model.addAttribute("title", "Home");
         model.addAttribute("redirectMessageFailure", "Access Denied as " + user.getAccountType().substring(0, 1).toUpperCase() + user.getAccountType().substring(1) + ": Redirected to Home");
         return "home";
     }
