@@ -24,7 +24,7 @@ public class ManageController {
     @Autowired
     AuthenticationController authenticationController;
 
-    @GetMapping
+    @GetMapping("")
     public String displayManageOpportunities(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
@@ -86,6 +86,10 @@ public class ManageController {
     @PostMapping("/edit-opportunity")
     public String processEditOpportunityForm(HttpServletRequest request,@ModelAttribute @Valid Opportunity opportunityEdits, Errors errors, @RequestParam int opportunityId, Model model){
 
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", user );
+        
         if(errors.hasErrors()) {
             model.addAttribute("title", "Edit Volunteer Opportunity:");
             return "create";
