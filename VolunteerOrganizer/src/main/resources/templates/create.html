@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8">
-    <div th:replace="fragments :: styling"></div>
-</head>
+<head th:replace="fragments :: head"></head>
+
 <body class="container">
 <div th:replace="fragments :: page-header"></div>
 <form method="post">

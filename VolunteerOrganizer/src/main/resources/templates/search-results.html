@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns:font-size="http://www.w3.org/1999/xhtml"
-      xmlns:font-weight="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Home</title>
-</head>
-<body>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
 
+<body class="container">
 
 <div th:replace="fragments :: page-header"></div>
 
@@ -17,16 +13,17 @@
 
 </div>
 
-<h2 style="color:green" th:text ="${'There are ' + opportunities.size() + ' matching volunteer opportunities'}"></h2>
+<h2 style="color:green" th:text="${'There are ' + opportunities.size() + ' matching volunteer opportunities'}"></h2>
 <p style="color:green"><em>Click on link for further detail and to sign up!</em></p>
 
 <table>
     <tr th:each="element : ${opportunityByOrganization}">
-        <td> <b  th:text= "${element.key}">key value</b></td>
+        <td><b th:text="${element.key}">key value</b></td>
         <table>
             <tr th:each="opportunity : ${element.value}">
-                    <td> <a style="color:green" th:href="@{'/home/search-results-opportunity/' + ${opportunity.getId()}}" th:text="${opportunity.startDate}"></a></td>
-                    <td th:text=${opportunity.description}>opportunity description</td>
+                <td><a style="color:green" th:href="@{'/home/search-results-opportunity/' + ${opportunity.getId()}}"
+                       th:text="${opportunity.startDate}"></a></td>
+                <td th:text=${opportunity.description}>opportunity description</td>
             </tr>
         </table>
         <br>

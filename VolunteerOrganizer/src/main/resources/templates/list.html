@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8">
-    <title>List</title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
 <div th:replace="fragments :: page-header"></div>
     <h2 class = "centered">All Organizations</h2>
     <li th:each="opportunity : ${opportunities}">
