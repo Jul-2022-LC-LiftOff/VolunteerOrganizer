@@ -15,7 +15,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" style="color:blue">Volunteer Organizer</a>
+            <a class="navbar-brand" href="#" style="color:blue"></a>
             <button
                     class="navbar-toggler"
                     type="button"
@@ -114,7 +114,7 @@
         <tr th:each="opportunity : ${opportunities}">
             <td>
                 <hr/>
-                <p th:text="${'Name: ' + opportunity.name}"></p>
+                <p th:text="${'Organization Name: ' + opportunity.name}"></p>
                 <p th:text="${'Start Date: ' + opportunity.startDate}"></p>
                 <p th:text="${'End Date: ' + opportunity.endDate}"></p>
                 <p th:text="${'Description: ' + opportunity.description}"></p>
