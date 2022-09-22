@@ -3,7 +3,6 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
-<<<<<<< HEAD
   <header>
       <img th:src = "@{/Volunteer-white-letters-.jpg}" />
       <h1>Volunteer Organizer</h1>
@@ -11,16 +10,17 @@
   </header>
 
 
-  <div>
-      <a th:href="@{'/signup/volunteer'}">
-          <button>Sign Up as Volunteer</button>
-      </a>
+    <div>
+        <a th:href="@{'/signup/volunteer'}">
+            <button>Sign Up as Volunteer</button>
+        </a>
+    </div>
+    <div>
+        <a th:href="@{'/signup/organization'}">
 
-      <a th:href="@{'/signup/organization'}">
-
-          <button>Sign Up as Organization</button>
-      </a>
-  </div>
+            <button>Sign Up as Organization</button>
+        </a>
+    </div>
 
     <div>
         <h2>Already Have An Account?</h2>
@@ -29,7 +29,7 @@
         </button>
     </div>
 
-  </div>
+</div>
 
 </body>
 </html>
