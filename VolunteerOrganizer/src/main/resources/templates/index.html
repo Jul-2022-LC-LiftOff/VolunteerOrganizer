@@ -9,16 +9,18 @@
       <h4 th:replace="fragments :: about-this-app"></h4>
   </header>
 
-  <div>
-      <a th:href="@{'/signup/volunteer'}">
-          <button>Sign Up as Volunteer</button>
-      </a>
 
-      <a th:href="@{'/signup/organization'}">
+    <div>
+        <a th:href="@{'/signup/volunteer'}">
+            <button>Sign Up as Volunteer</button>
+        </a>
+    </div>
+    <div>
+        <a th:href="@{'/signup/organization'}">
 
-          <button>Sign Up as Organization</button>
-      </a>
-  </div>
+            <button>Sign Up as Organization</button>
+        </a>
+    </div>
 
     <div>
         <h2>Already Have An Account?</h2>
@@ -26,6 +28,8 @@
             Login
         </button>
     </div>
+
+</div>
 
 </body>
 </html>
