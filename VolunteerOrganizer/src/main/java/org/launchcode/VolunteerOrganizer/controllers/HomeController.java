@@ -36,7 +36,10 @@ public class HomeController {
 
 
     @GetMapping("")
-    public String displayHome(Model model) {
+    public String displayHome(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", user);
         return "home";
     }
 
@@ -80,6 +83,7 @@ public class HomeController {
     public String searchOpportunityDetail(HttpServletRequest request, Model model, @PathVariable int opportunityId) {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", user);
 
         Optional<Opportunity> opportunity = opportunityRepository.findById(opportunityId);
         if(!opportunity.isPresent()){
@@ -88,14 +92,11 @@ public class HomeController {
         }
         Opportunity x = (Opportunity) opportunity.get();
 
-        model.addAttribute("user", user);
         model.addAttribute("heading", opportunity.get().getName() +"  "+ opportunity.get().getDescription());
         model.addAttribute("opportunities", x);
 
         return "search-results-opportunity";
     }
-
-
 
     @GetMapping("/redirect/access-denied")
     public String displayHomeRedirectAccessDenied(HttpServletRequest request, Model model) {
@@ -104,6 +105,7 @@ public class HomeController {
         User user = authenticationController.getUserFromSession(session);
 
         model.addAttribute("redirectMessageFailure", "Access Denied as " + user.getAccountType().substring(0, 1).toUpperCase() + user.getAccountType().substring(1) + ": Redirected to Home");
+        model.addAttribute("user", user);
         return "home";
     }
 

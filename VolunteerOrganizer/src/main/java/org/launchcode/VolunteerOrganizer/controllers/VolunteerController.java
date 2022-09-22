@@ -29,6 +29,7 @@ public class VolunteerController {
     public String displayRegisteredOpportunities(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", user);
 
         Iterable<Opportunity> allOpportunities = opportunityRepository.findAll();
         ArrayList<Opportunity> registeredOpportunities = new ArrayList<>();
@@ -41,7 +42,6 @@ public class VolunteerController {
 
         if (!registeredOpportunities.isEmpty()) {
             model.addAttribute("opportunities", registeredOpportunities);
-            model.addAttribute("user", user);
             return "registered-opportunities";
         } else {
             return "registered-opportunities";
@@ -52,6 +52,7 @@ public class VolunteerController {
     public String volunteerSignup(HttpServletRequest request, @RequestParam Integer opportunityId, Model model){
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", user);
 
         Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
 
@@ -83,6 +84,7 @@ public class VolunteerController {
     public String volunteerUnregister(HttpServletRequest request, @RequestParam Integer opportunityId, Model model){
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", user);
 
         Optional<Opportunity> result = opportunityRepository.findById(opportunityId);
 

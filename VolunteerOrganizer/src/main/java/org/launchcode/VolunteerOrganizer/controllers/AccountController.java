@@ -34,7 +34,7 @@ public class AccountController {
     public String displayAccount(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
-        model.addAttribute("title", "Account View");
+        model.addAttribute("title", "Account Details");
         model.addAttribute("user", user);
         return "account";
     }

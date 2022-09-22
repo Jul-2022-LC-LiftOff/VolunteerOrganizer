@@ -24,7 +24,9 @@ public class ListController {
     AuthenticationController authenticationController;
 
     @GetMapping("list")
-    public String list(Model model) {
+    public String list(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
         List<String> orgNames = new ArrayList<>();
         List<Opportunity> opportunitiesList = new ArrayList<>();
         Iterable<Opportunity> allOpportunity = opportunityRepository.findAll();
@@ -34,8 +36,8 @@ public class ListController {
                 opportunitiesList.add(opportunity);
             }
         }
-
-       model.addAttribute("opportunities",opportunitiesList );
+        model.addAttribute("user", user );
+        model.addAttribute("opportunities",opportunitiesList );
         return "list";
     }
 
@@ -45,10 +47,8 @@ public class ListController {
         User user = authenticationController.getUserFromSession(session);
         List<Opportunity> opportunity= opportunityRepository.findByName(orgName);
         model.addAttribute("user", user );
-
         model.addAttribute("heading", "Opportunities for: "+ orgName );
-            model.addAttribute("opportunities", opportunity);
-            return "list-opportunity";
+        model.addAttribute("opportunities", opportunity);
+        return "list-opportunity";
     }
-
 }

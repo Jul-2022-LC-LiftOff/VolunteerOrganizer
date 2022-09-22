@@ -29,26 +29,27 @@ public class CreateController {
     @Autowired
     AuthenticationController authenticationController;
 
-    @GetMapping
-    public String renderCreateOpportunityForm(Model model){
+    @GetMapping("")
+    public String renderCreateOpportunityForm(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
         model.addAttribute("title", "Create Volunteer Opportunity:");
         model.addAttribute("opportunity", new Opportunity());
+        model.addAttribute("user", user);
         return "create";
     }
 
-    @PostMapping
+    @PostMapping("")
     public String processCreateOpportunityForm(HttpServletRequest request,@ModelAttribute @Valid Opportunity opportunity, Errors errors, Model model){
-
-      if(errors.hasErrors()) {
-          model.addAttribute("title", "Create Volunteer Opportunity:");
-          return "create";
-      }
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
         opportunity.setCreatorUserId(user.getId());
+        if(errors.hasErrors()) {
+            model.addAttribute("title", "Create Volunteer Opportunity:");
+            return "create";
+        }
         opportunity.setName(user.getOrganizationName());
         opportunityRepository.save(opportunity);
         return "redirect:/home";
     }
-
 }
