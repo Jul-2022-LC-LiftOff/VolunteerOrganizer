@@ -89,7 +89,7 @@ public class HomeController {
         Opportunity x = (Opportunity) opportunity.get();
 
         model.addAttribute("user", user);
-        model.addAttribute("heading", "Volunteer Opportunity Detail: ");
+        model.addAttribute("heading", opportunity.get().getName() +"  "+ opportunity.get().getDescription());
         model.addAttribute("opportunities", x);
 
         return "search-results-opportunity";
