@@ -4,13 +4,17 @@
     <meta charset="UTF-8"/>
     <title th:text="${title}"></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles.css}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
 </head>
 <body class="container">
 
 <div th:fragment="page-header">
-    <link rel="stylesheet" th:href="@{/styles.css}">
-    <img th:src = "@{/Volunteer-white-letters-.jpg}" />
+<!--    <img th:src = "@{/Volunteer-white-letters-.jpg}" style="height: 300px;" />-->
+    <div class="p-5 bg-image" style="
+        background-image: url('https://www.leanderisd.org/wp-content/uploads/2020/12/Volunteer-white-letters-.png');
+        height: 200px;">
+    </div>
 
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -66,7 +70,7 @@
 
 <div th:fragment="search-form">
 
-   <div class="card">
+   <div>
     <h2>Search for Volunteer Opportunity</h2>
 
     <form th:action="@{/home/results}" method="post">
@@ -80,8 +84,7 @@
 
 
         <p class="form-group">
-            <label for="searchTerm"><b>Keyword:</b> (organization name, activity description or city)</label>
-            <input type="text" name="searchTerm" id="searchTerm" class="form-control"/>
+            <input type="text" name="searchTerm" id="searchTerm" class="form-control" placeholder="Enter Organization Name, Keyword or Location"/>
         </p>
 
 
