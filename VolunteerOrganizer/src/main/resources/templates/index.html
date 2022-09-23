@@ -4,32 +4,110 @@
 
 <body class="container">
   <header>
-      <img src = "https://www.leanderisd.org/wp-content/uploads/2020/12/Volunteer-white-letters-.png" style="height: 300px;" />
-      <h1>Volunteer Organizer</h1>
-      <h4 th:replace="fragments :: about-this-app"></h4>
+<!--      <img src = "https://www.leanderisd.org/wp-content/uploads/2020/12/Volunteer-white-letters-.png" style="height: 300px;" />-->
+      <h1 style=" color:darkblue">Volunteer Organizer</h1>
+<!--      <h4 th:replace="fragments :: about-this-app"></h4>-->
   </header>
+<!-- Section: Design Block -->
+  <div class="p-5 bg-image" style="
+        background-image: url('https://www.leanderisd.org/wp-content/uploads/2020/12/Volunteer-white-letters-.png');
+        height: 200px;">
+  </div>
+<section class="background-radial-gradient overflow-hidden">
+    <style>
+    .background-radial-gradient {
+      background-color: hsl(218, 41%, 15%);
+      background-image: radial-gradient(650px circle at 0% 0%,
+          hsl(218, 41%, 35%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+          hsl(218, 41%, 45%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%);
+    }
 
+    #radius-shape-1 {
+      height: 220px;
+      width: 220px;
+      top: -60px;
+      left: -130px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
 
-    <div>
-        <a th:href="@{'/signup/volunteer'}">
-            <button>Sign Up as Volunteer</button>
-        </a>
+    #radius-shape-2 {
+      border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+      bottom: -60px;
+      right: -110px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    .bg-glass {
+      background-color: hsla(0, 0%, 100%, 0.9) !important;
+      backdrop-filter: saturate(200%) blur(25px);
+    }
+  </style>
+
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+        <div class="row gx-lg-5 align-items-center mb-5">
+            <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+<!--                <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">-->
+<!--                    The best offer <br />-->
+<!--                    <span style="color: hsl(218, 81%, 75%)">for your business</span>-->
+<!--                </h1>-->
+                <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+                    This is an app where users can sign up to volunteer for events created by organizations.
+                    This idea came from the need for relevant volunteer opportunities to be easily visible to potential volunteers.
+                </p>
+            </div>
+
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                <div class="card bg-glass">
+                    <div class="card-body px-4 py-5 px-md-5">
+                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <a th:href="@{'/signup/volunteer'}">
+                                            <button class="btn btn-primary btn-block mb-4">Sign Up as Volunteer</button>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <a th:href="@{'/signup/organization'}">
+                                            <button class="btn btn-primary btn-block mb-4">Sign Up as Organization</button>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <h2 >Already Have An Account?</h2>
+                                        <button class="btn btn-primary btn-block mb-4" onclick="location.href='/login'">
+                                            Login
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <a th:href="@{'/signup/organization'}">
-
-            <button>Sign Up as Organization</button>
-        </a>
-    </div>
-
-    <div>
-        <h2>Already Have An Account?</h2>
-        <button onclick="location.href='/login'">
-            Login
-        </button>
-    </div>
-
-</div>
-
+</section>
 </body>
 </html>
+<!-- Section: Design Block -->

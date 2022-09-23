@@ -10,7 +10,11 @@
 
 <div th:fragment="page-header">
     <link rel="stylesheet" th:href="@{/styles.css}">
-    <img th:src = "@{/Volunteer-white-letters-.jpg}" />
+<!--    <img th:src = "@{/Volunteer-white-letters-.jpg}" style="height: 300px;" />-->
+    <div class="p-5 bg-image" style="
+        background-image: url('https://www.leanderisd.org/wp-content/uploads/2020/12/Volunteer-white-letters-.png');
+        height: 200px;">
+    </div>
 
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -66,7 +70,7 @@
 
 <div th:fragment="search-form">
 
-   <div class="card">
+   <div>
     <h2>Search for Volunteer Opportunity</h2>
 
     <form th:action="@{/home/results}" method="post">
