@@ -4,12 +4,12 @@
     <meta charset="UTF-8"/>
     <title th:text="${title}"></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles.css}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
 </head>
 <body class="container">
 
 <div th:fragment="page-header">
-    <link rel="stylesheet" th:href="@{/styles.css}">
 <!--    <img th:src = "@{/Volunteer-white-letters-.jpg}" style="height: 300px;" />-->
     <div class="p-5 bg-image" style="
         background-image: url('https://www.leanderisd.org/wp-content/uploads/2020/12/Volunteer-white-letters-.png');
