@@ -6,16 +6,13 @@
 
 
 
-<!-- Section: Design Block -->
 <section class="text-center">
-    <!-- Background image -->
     <div class="p-5 bg-image" style="
         background-image: url('https://www.leanderisd.org/wp-content/uploads/2020/12/Volunteer-white-letters-.png');
         height: 300px;
         ">
 
     </div>
-    <!-- Background image -->
 
     <div class="card mx-4 mx-md-5 shadow-5-strong" style="
         margin-top: -100px;
@@ -28,7 +25,6 @@
                 <div class="col-lg-8">
                     <h2 class="fw-bold mb-5">Welcome Back!</h2>
                     <form method="post">
-                        <!-- 2 column grid layout with text inputs for the first and last names -->
                         <div class="col-md-6 mb-4">
                             <div class="form-outline">
                                 <label class="form-label" th:for="username">
@@ -56,35 +52,7 @@
         </div>
     </div>
 </section>
-<!-- Section: Design Block -->
 
 
 </body>
 </html>
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org/">-->
-<!--<head th:replace="fragments :: head"></head>-->
-
-<!--<body class="container">-->
-<!--<h2>Welcome Back!</h2>-->
-
-<!--<form method="post">-->
-<!--    <div class="form-group">-->
-<!--        <label th:for="username">-->
-<!--            <input class="form-control" th:field="${loginFormDTO.username}" placeholder="Username" required>-->
-<!--        </label>-->
-<!--        <p class="error" th:errors="${loginFormDTO.username}"></p>-->
-<!--    </div>-->
-<!--    <div class="form-group">-->
-<!--        <label>-->
-<!--            <input class="form-control" th:field="${loginFormDTO.password}" type="password" placeholder="Password" required>-->
-<!--        </label>-->
-<!--        <p class="error" th:errors="${loginFormDTO.password}"></p>-->
-<!--    </div>-->
-<!--    <p class="error" style="color:red" th:text="${invalidLoginMessage}"></p>-->
-<!--    <input type="submit" class="btn btn-primary" value="Log In" />-->
-<!--</form>-->
-
-<!--</body>-->
-<!--</html>-->
